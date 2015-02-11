@@ -1,0 +1,1 @@
+--style=1tbs --indent=force-tab=4 --min-conditional-indent=0 --max-instatement-indent=60 --align-pointer=type --align-reference=type --indent-switches --indent-col1-comments --pad-oper --pad-header --unpad-paren --close-templates --add-brackets --convert-tabs --mode=c

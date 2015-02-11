@@ -171,6 +171,7 @@ sub run_dfm {
     else {
         $repo_dir = $realbin;
         $repo_dir =~ s/$home\///;
+        $repo_dir =~ s/\/.local//;
         $repo_dir =~ s/\/bin//;
     }
 
@@ -394,13 +395,13 @@ sub install_files {
 
     my $symlink_base = _calculate_symlink_base( $source_dir, $target_dir );
 
-    my $backup_dir = $target_dir . '/.backup';
+    my $backup_dir = $target_dir . '/.dotbackup';
     DEBUG("Backup dir: $backup_dir");
 
     my $cwd_before_install = getcwd();
     chdir($target_dir);
 
-    my $dfm_install = _load_dfminstall("$source_dir/.dfminstall");
+    my $dfm_install = _load_dfminstall("$source_dir/.dotinstall");
 
     if ( !-e $backup_dir ) {
         DEBUG("Creating $backup_dir");
@@ -521,12 +522,12 @@ sub uninstall_files {
 
     DEBUG("Uninstalling from $target_dir");
 
-    my $backup_dir = $target_dir . '/.backup';
+    my $backup_dir = $target_dir . '/.dotbackup';
     DEBUG("Backup dir: $backup_dir");
 
     chdir($target_dir);
 
-    my $dfm_install = _load_dfminstall("$source_dir/.dfminstall");
+    my $dfm_install = _load_dfminstall("$source_dir/.dotinstall");
 
     my $dirh;
     opendir $dirh, $target_dir;
@@ -549,7 +550,7 @@ sub uninstall_files {
                 unlink($direntry) if !$opts{'dry-run'};
             }
 
-            my $backup_path = File::Spec->catpath( '', '.backup', $element );
+            my $backup_path = File::Spec->catpath( '', '.dotbackup', $element );
             if ( -e $backup_path ) {
                 INFO("  Restoring $direntry from backup.");
                 rename( $backup_path, $element ) if !$opts{'dry-run'};
@@ -820,7 +821,7 @@ sub _file_in_tracked_or_untracked {
     my $cwd_before_inspection = getcwd();
     chdir($source_dir);
 
-    my $dfm_install = _load_dfminstall("$source_dir/.dfminstall");
+    my $dfm_install = _load_dfminstall("$source_dir/.dotinstall");
 
     # skip vim swap files
     return ('skip') if $file =~ /.*\.sw.$/;
@@ -863,7 +864,7 @@ sub _load_dfminstall {
         skip_files => {
             '.'           => 1,
             '..'          => 1,
-            '.dfminstall' => 1,
+            '.dotinstall' => 1,
             '.gitignore'  => 1,
             '.git'        => 1,
         },
@@ -879,10 +880,10 @@ sub _load_dfminstall {
             chomp($line);
             if ( length($line) ) {
                 my ( $filename, @options ) = split( q{ }, $line );
-                DEBUG(".dfminstall file $filename has @options");
+                DEBUG(".dotinstall file $filename has @options");
                 if ( !defined $options[0] ) {
                     WARN(
-                        "using implied recursion in .dfminstall is deprecated, change '$filename' to '$filename recurse' in $dfminstall_path."
+                        "using implied recursion in .dotinstall is deprecated, change '$filename' to '$filename recurse' in $dfminstall_path."
                     );
                     push( @{ $dfminstall_info->{recurse_files} }, $filename );
                     $dfminstall_info->{skip_files}->{$filename} = 1;
@@ -1014,15 +1015,15 @@ Description:
 
 This installs everything in the repository into the current user's home
 directory by making symlinks.  To skip any files, add their names to a file
-named '.dfminstall'.  For instance, to skip 'README.md', put this in
-.dfminstall:
+named '.dotinstall'.  For instance, to skip 'README.md', put this in
+.dotinstall:
 
     README.md skip
 
 To recurse into a directory and install files inside rather than symlinking the
-directory itself, just add its name to .dfminstall.  For instance, to make 'dfm
+directory itself, just add its name to .dotinstall.  For instance, to make 'dfm
 install' symlink files inside of ~/.ssh instead of making ~/.ssh a symlink, put
-this in .dfminstall:
+this in .dotinstall:
 
     .ssh
 

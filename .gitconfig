@@ -1,0 +1,50 @@
+[user]
+	name = Gergely Nagy
+	email = ngg@tresorit.com
+[alias]
+	graph = log --graph --oneline --decorate
+	k = !gitk --date-order
+	su = submodule update --init --recursive
+	st = status
+	ci = commit
+	co = checkout
+	b = branch
+	ignored = !git ls-files -v | grep "^[a-z]"
+	ignore = update-index --assume-unchanged
+	unignore = update-index --no-assume-unchanged
+	dd = difftool -d
+	mtg = mergetool --tool=bc4
+[core]
+	autocrlf = input
+	editor = vim
+[push]
+	default = simple
+[pull]
+	rebase = preserve
+[branch]
+	autosetuprebase = always
+[credential]
+	helper = store
+[color]
+	ui = always
+
+[diff]
+	tool = vimdiff
+	guitool = bc4
+[difftool]
+	prompt = false
+[difftool "bc4"]
+	cmd = bcompare \"$LOCAL\" \"$REMOTE\"
+[difftool "vimdiff"]
+	cmd = vimdiff \"$LOCAL\" \"$REMOTE\"
+
+[merge]
+	tool = vimdiff
+	guitool = bc4
+	conflictstyle = diff3
+[mergetool]
+	prompt = false
+	keepBackup = false
+	trustExitCode = true
+[mergetool "bc4"]
+	cmd = bcompare \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"

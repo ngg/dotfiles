@@ -1,0 +1,12 @@
+[submodule ".local/share/mc/mc-solarized-skin"]
+	path = .local/share/mc/mc-solarized-skin
+	url = git@github.com:iwfmp/mc-solarized-skin
+[submodule ".local/share/dircolors/dircolors-solarized"]
+	path = .local/share/dircolors/dircolors-solarized
+	url = git@github.com:seebi/dircolors-solarized
+[submodule ".config/awesome/themes/awesome-solarized"]
+	path = .config/awesome/themes/awesome-solarized
+	url = git@github.com:cycojesus/awesome-solarized
+[submodule ".vim/bundle/Vundle.vim"]
+	path = .vim/bundle/Vundle.vim
+	url = git@github.com:gmarik/Vundle.vim
