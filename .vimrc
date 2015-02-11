@@ -143,8 +143,8 @@ syntax enable
 let g:load_doxygen_syntax = 1
 
 set background=dark
-let g:solarized_termcolors=256
-let g:solarized_termtrans=1
+let g:solarized_termcolors = 16
+let g:solarized_termtrans = 1
 colorscheme solarized
 
 noremap <silent> <F1> :bp<CR>
