@@ -96,6 +96,7 @@ URxvt*depth: 32
 !URxvt*colorUL: yellow
 !URxvt*underlineColor: yellow
 
+URxvt*letterSpace: -1
 URxvt*font: xft:Source Code Pro for Powerline:style=Regular:pixelsize=13
 URxvt*boldFont: xft:Source Code Pro for Powerline:style=SemiBold:pixelsize=13
 

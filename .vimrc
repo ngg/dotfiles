@@ -22,6 +22,7 @@ Plugin 'SirVer/ultisnips'
 Plugin 'wikitopian/hardmode'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'Chiel92/vim-autoformat'
+Plugin 'mhinz/vim-startify'
 Plugin 'https://bitbucket.org/tresorit/vim-lldb.git'
 Plugin 'https://bitbucket.org/tresorit/vimtresorit.git'
 call vundle#end()
