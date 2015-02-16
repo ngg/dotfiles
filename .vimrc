@@ -26,6 +26,7 @@ Plugin 'wikitopian/hardmode'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'Chiel92/vim-autoformat'
 Plugin 'Valloric/ListToggle'
+Plugin 'ngg/vim-protobuf'
 if (s:hostname =~ "bp1-dsklin")
 	Plugin 'https://bitbucket.org/tresorit/vim-lldb.git'
 	Plugin 'https://bitbucket.org/tresorit/vimtresorit.git'
@@ -72,29 +73,33 @@ set diffopt+=vertical
 set exrc
 set secure
 
+" Share X windows clipboard
+if has('unnamedplus')
+	set clipboard=unnamedplus
+endif
+
 " Override gentoo vimrc
 let g:leave_my_textwidth_alone = 1
 
 " Save as root
 cmap w!! w !sudo tee % >/dev/null
 
-"let g:unite_prompt='» '
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-call unite#filters#sorter_default#use(['sorter_rank'])
-nnoremap <silent> <C-p> :Unite file_rec/async -start-insert<cr>
-nnoremap <silent> <C-i> :Unite file_mru -start-insert<cr>
+" Unite
+let g:unite_prompt='» '
+let g:unite_source_history_yank_enable = 1
+let g:unite_source_grep_max_candidates = 1000
 if executable('ag')
 	let g:unite_source_grep_command = 'ag'
-	let g:unite_source_grep_default_opts = '--line-numbers --nocolor --nogroup --hidden --ignore ''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
+	let g:unite_source_grep_default_opts = '--line-numbers --nocolor --nogroup --hidden'
 	let g:unite_source_grep_recursive_opt = ''
-	
-	function! s:ReplaceInFiles(search, replace)
-		exec "!ag -l " . a:search . " | xargs sed -i 's@" . a:search . "@" . a:replace . "@g'"
-	endfunction
-	command! -nargs=+ ReplaceInFiles call s:ReplaceInFiles(<f-args>)
+	let g:unite_source_rec_async_command = 'ag --follow --nocolor --nogroup --hidden -g ""'
 endif
-nnoremap <silent> <leader>/ :Unite grep:.<cr>
-let g:unite_source_history_yank_enable = 1
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+call unite#filters#sorter_default#use(['sorter_rank'])
+nnoremap <silent> <C-p> :Unite -start-insert -no-split -auto-preview file_rec/async<cr>
+nnoremap <silent> <leader>p :Unite -start-insert -no-split -auto-preview file_mru<cr>
+nnoremap <silent> <leader>/ :Unite -toggle -auto-resize -silent -buffer-name=ag grep:.<cr>
+nnoremap <silent> <leader><leader>/ :Unite -resume -buffer-name=ag grep:.<cr>
 nnoremap <silent> <leader>y :Unite history/yank<cr>
 nnoremap <silent> <leader>b :Unite -quick-match buffer<cr>
 
@@ -115,7 +120,6 @@ nnoremap <silent> <leader>bf :exec ":Make -j5 " . g:GetBuildFileParams(@%)<CR>
 nnoremap <silent> <leader>bp :exec ":Make! -j5 " . g:GetBuildProjectParams(@%)<CR>
 nnoremap <silent> <leader>ba :exec ":Make! -j5 " . g:GetBuildAllParams(@%)<CR>
 nnoremap <silent> <leader>bak :exec ":Make! -j5 -k " . g:GetBuildAllParams(@%)<CR>
-nnoremap <silent> <leader>bp :exec ":Make! -j5 " . g:GetBuildProjectParams(@%)<CR>
 
 " good for airline
 set laststatus=2
@@ -193,6 +197,14 @@ autocmd FileType c,cpp,python,ruby,java autocmd BufWritePre <buffer> :%s/\s\+$//
 
 " Re-adjust windows on window resize
 autocmd VimResized * wincmd =
+
+" Search and Replace
+if executable('ag')
+	function! s:ReplaceInFiles(search, replace)
+		exec "!ag -l " . a:search . " | xargs sed -i 's@" . a:search . "@" . a:replace . "@g'"
+	endfunction
+	command! -nargs=+ ReplaceInFiles call s:ReplaceInFiles(<f-args>)
+endif
 
 syntax enable
 let g:load_doxygen_syntax = 1
