@@ -1,6 +1,9 @@
 set nocompatible
 filetype off
 
+" Hostname for host specific configuration
+let s:hostname = substitute(system('hostname'), '\n', '', '')
+
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
@@ -22,9 +25,11 @@ Plugin 'SirVer/ultisnips'
 Plugin 'wikitopian/hardmode'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'Chiel92/vim-autoformat'
-Plugin 'mhinz/vim-startify'
-Plugin 'https://bitbucket.org/tresorit/vim-lldb.git'
-Plugin 'https://bitbucket.org/tresorit/vimtresorit.git'
+Plugin 'Valloric/ListToggle'
+if (s:hostname =~ "bp1-dsklin")
+	Plugin 'https://bitbucket.org/tresorit/vim-lldb.git'
+	Plugin 'https://bitbucket.org/tresorit/vimtresorit.git'
+endif
 call vundle#end()
 filetype plugin indent on
 
@@ -99,7 +104,7 @@ let g:UltiSnipsExpandTrigger="<c-y>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
-" For Tresorit
+" VimTresorit
 noremap <silent> <F3> :Autoformat<CR><CR>
 nnoremap <silent> <leader>mh :ToggleMakeHost<CR>
 nnoremap <silent> <leader>mc :ToggleMakeCompiler<CR>
@@ -117,6 +122,8 @@ set laststatus=2
 set noshowmode
 let g:airline_theme='solarized'
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#show_tabs = 1
 let g:airline_powerline_fonts=1
 
 " EasyMotion
@@ -124,21 +131,68 @@ let g:EasyMotion_smartcase = 1
 let g:EasyMotion_do_mapping = 0
 nmap s <Plug>(easymotion-s2)
 omap t <Plug>(easymotion-t)
+omap / <Plug>(easymotion-tn)
 map <leader>j <Plug>(easymotion-j)
 map <leader>k <Plug>(easymotion-k)
-map / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
-map n <Plug>(easymotion-next)
-map N <Plug>(easymotion-prev)
+"map / <Plug>(easymotion-sn)
+"map n <Plug>(easymotion-next)
+"map N <Plug>(easymotion-prev)
 
 " YCM
 let g:ycm_extra_conf_globlist = ['~/git/*', '!~/*']
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_always_populate_location_list = 1
 let g:ycm_error_symbol = 'E>'
 let g:ycm_warning_symbol = 'W>'
 let g:ycm_complete_in_comments = 1
 let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_key_invoke_completion = '<C-Space>'
+nnoremap <silent> <leader>g :YcmCompleter GoTo<CR>
+
+" ListToggle
+let g:lt_location_list_toggle_map = '<leader>l'
+let g:lt_quickfix_list_toggle_map = '<leader>q'
+let g:lt_height = 15
+
+" LLDB
+nnoremap <silent> <F8> :Lcontinue<CR>
+nnoremap <silent> <F9> :Lbreakpoint<CR>
+nnoremap <silent> <F10> :Lnext<CR>
+nnoremap <silent> <F11> :Lstep<CR>
+nnoremap <silent> <leader><F11> :Lfinish<CR>
+function! g:StartDebug(program, args)
+	exec "Ltarget " . a:program
+	exec "Lbreakpoint set --name main"
+	exec "Lhide disassembly"
+	exec "Lhide registers"
+	exec "Lstart " . a:args
+endfunction
+nnoremap <F5> :call StartDebug(g:GetTresoritCLIPath(), "")<Left><Left>
+nnoremap <leader><F5> :call StartDebug(g:GetTresoritTestPath(), "-t " . expand("<cword>" . ""))<Left><Left><Left>
+
+" Better regex syntax
+nnoremap / /\v
+vnoremap / /\v
+
+" Faster Escape
+inoremap jj <ESC>
+
+" In normal mode, we use : much more often than ; so lets swap them.
+" WARNING: this will cause any "ordinary" map command without the "nore" prefix
+" that uses ":" to fail. For instance, "map <f2> :w" would fail, since vim will
+" read ":w" as ";w" because of the below remappings. Use "noremap"s in such
+" situations and you'll be fine.
+nnoremap ; :
+nnoremap : ;
+vnoremap ; :
+vnoremap : ;
+
+" Trim whitespaces
+autocmd FileType c,cpp,python,ruby,java autocmd BufWritePre <buffer> :%s/\s\+$//e
+
+" Re-adjust windows on window resize
+autocmd VimResized * wincmd =
 
 syntax enable
 let g:load_doxygen_syntax = 1

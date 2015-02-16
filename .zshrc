@@ -116,8 +116,13 @@ usercolor="green"           # user is green
 if [ "$USER" = "root" ]; then
     usercolor="red"         # root is red
 fi;
-prompt="%B%{$fg[$usercolor]%}%n@%u%m%{$fg[blue]%}%u %B%~%b "
-RPROMPT='${vim_mode} ${vcs_info_msg_0_}'
+if [[ $+MC_SID = 1 ]]; then
+	prompt=">%(#/#/) "
+	RPROMPT=""
+else
+	prompt="%B%{$fg[$usercolor]%}%n@%u%m%{$fg[blue]%}%u %B%~%b "
+	RPROMPT='${vim_mode} ${vcs_info_msg_0_}'
+fi
 
 
 ##
