@@ -60,6 +60,12 @@ set tabstop=4
 set softtabstop=0
 set noexpandtab
 set shiftwidth=4
+" we have to force these settings to python because default script overwrites
+" these with setlocal
+augroup python
+	au FileType python setlocal tabstop=4 softtabstop=0 noexpandtab shiftwidth=4
+augroup end
+
 set smarttab
 set autoindent
 set smartindent
@@ -72,6 +78,10 @@ set title
 set diffopt+=vertical
 set exrc
 set secure
+
+set nobackup
+set writebackup
+set noswapfile
 
 " Share X windows clipboard
 if has('unnamedplus')
@@ -178,6 +188,7 @@ nnoremap <leader><F5> :call StartDebug(g:GetTresoritTestPath(), "-t " . expand("
 " Better regex syntax
 nnoremap / /\v
 vnoremap / /\v
+cnoremap s/ s/\v
 
 " Faster Escape
 inoremap jj <ESC>
@@ -193,7 +204,7 @@ vnoremap ; :
 vnoremap : ;
 
 " Trim whitespaces
-autocmd FileType c,cpp,python,ruby,java autocmd BufWritePre <buffer> :%s/\s\+$//e
+autocmd FileType c,cpp,python,ruby,java,proto autocmd BufWritePre <buffer> :%s/\s\+$//e
 
 " Re-adjust windows on window resize
 autocmd VimResized * wincmd =
