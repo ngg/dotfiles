@@ -31,6 +31,7 @@
 [diff]
 	tool = vimdiff
 	guitool = bc4
+	algorithm = patience
 [difftool]
 	prompt = false
 [difftool "bc4"]
