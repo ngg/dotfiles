@@ -122,6 +122,8 @@ screen-256color-bce=
 
 rxvt-unicode-256color=
 
+linux=
+
 [Panels]
 show_mini_info=true
 kilobyte_si=false

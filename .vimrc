@@ -105,6 +105,7 @@ endif
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
 nnoremap <silent> <C-p> :Unite -start-insert -no-split -auto-preview file_rec/async<cr>
+nnoremap <silent> <leader>' :Unite -start-insert -no-split -auto-preview file_rec/git<cr>
 nnoremap <silent> <leader>p :Unite -start-insert -no-split -auto-preview file_mru<cr>
 nnoremap <silent> <leader>/ :Unite -toggle -auto-resize -silent -buffer-name=ag grep:.<cr>
 nnoremap <silent> <leader><leader>/ :Unite -resume -buffer-name=ag grep:.<cr>
