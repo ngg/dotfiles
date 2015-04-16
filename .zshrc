@@ -163,7 +163,7 @@ setopt pushd_to_home            # `pushd` = `pushd $HOME`
 setopt auto_cd                  # if command is a path, cd into it
 setopt auto_remove_slash        # self explicit
 setopt chase_links              # resolve symlinks
-setopt correct                  # try to correct spelling of commands
+unsetopt correct                # do not try to correct spelling of commands
 setopt extended_glob            # activate complex pattern globbing
 setopt glob_dots                # include dotfiles in globbing
 setopt print_exit_value         # print return value if non-zero

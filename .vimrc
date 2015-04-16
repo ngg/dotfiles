@@ -27,6 +27,7 @@ Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'Chiel92/vim-autoformat'
 Plugin 'Valloric/ListToggle'
 Plugin 'ngg/vim-protobuf'
+Plugin 'rust-lang/rust.vim'
 if (s:hostname =~ "bp1-dsklin")
 	Plugin 'https://bitbucket.org/tresorit/vim-lldb.git'
 	Plugin 'https://bitbucket.org/tresorit/vimtresorit.git'
