@@ -61,9 +61,8 @@ set tabstop=4
 set softtabstop=0
 set noexpandtab
 set shiftwidth=4
-" we have to force these settings to python because default script overwrites
-" these with setlocal
-autocmd FileType python setlocal tabstop=4 softtabstop=0 noexpandtab shiftwidth=4
+" Unite messes with my expandtab settings...
+autocmd VimEnter,BufNewFile,BufReadPost * silent! setlocal tabstop=4 softtabstop=0 noexpandtab shiftwidth=4
 
 set smarttab
 set autoindent
