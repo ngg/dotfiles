@@ -61,8 +61,6 @@ set tabstop=4
 set softtabstop=0
 set noexpandtab
 set shiftwidth=4
-" Unite messes with my expandtab settings...
-autocmd VimEnter,BufNewFile,BufReadPost * silent! setlocal tabstop=4 softtabstop=0 noexpandtab shiftwidth=4
 
 set smarttab
 set autoindent
@@ -201,9 +199,6 @@ nnoremap ; :
 nnoremap : ;
 vnoremap ; :
 vnoremap : ;
-
-" Trim whitespaces
-autocmd FileType c,cpp,python,ruby,java,proto autocmd BufWritePre <buffer> :%s/\s\+$//e
 
 " Re-adjust windows on window resize
 autocmd VimResized * wincmd =
