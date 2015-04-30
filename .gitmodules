@@ -13,3 +13,6 @@
 [submodule ".fonts/powerline"]
 	path = .fonts/powerline
 	url = git@github.com:powerline/fonts
+[submodule ".local/share/peda"]
+	path = .local/share/peda
+	url = https://github.com/longld/peda.git
