@@ -1,18 +1,18 @@
 [submodule ".local/share/mc/mc-solarized-skin"]
 	path = .local/share/mc/mc-solarized-skin
-	url = git@github.com:iwfmp/mc-solarized-skin
+	url = https://github.com/iwfmp/mc-solarized-skin
 [submodule ".local/share/dircolors/dircolors-solarized"]
 	path = .local/share/dircolors/dircolors-solarized
-	url = git@github.com:seebi/dircolors-solarized
+	url = https://github.com/seebi/dircolors-solarized
 [submodule ".config/awesome/themes/awesome-solarized"]
 	path = .config/awesome/themes/awesome-solarized
-	url = git@github.com:cycojesus/awesome-solarized
+	url = https://github.com/cycojesus/awesome-solarized
 [submodule ".vim/bundle/Vundle.vim"]
 	path = .vim/bundle/Vundle.vim
-	url = git@github.com:gmarik/Vundle.vim
+	url = https://github.com/gmarik/Vundle.vim
 [submodule ".fonts/powerline"]
 	path = .fonts/powerline
-	url = git@github.com:powerline/fonts
+	url = https://github.com/powerline/fonts
 [submodule ".local/share/peda"]
 	path = .local/share/peda
 	url = https://github.com/longld/peda.git
