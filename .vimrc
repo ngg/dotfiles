@@ -9,11 +9,13 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'gregsexton/gitv'
 Plugin 'Shougo/vimproc.vim'
 Plugin 'Shougo/unite.vim'
 Plugin 'Shougo/neomru.vim'
+Plugin 'dkprice/vim-easygrep'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'bling/vim-airline'
@@ -102,13 +104,17 @@ if executable('ag')
 endif
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
-nnoremap <silent> <C-p> :Unite -start-insert -no-split -auto-preview file_rec/async<cr>
+nnoremap <silent> <C-p> :Unite -start-insert -no-split file_rec/async<cr>
 nnoremap <silent> <leader>' :Unite -start-insert -no-split -auto-preview file_rec/git<cr>
 nnoremap <silent> <leader>p :Unite -start-insert -no-split -auto-preview file_mru<cr>
-nnoremap <silent> <leader>/ :Unite -toggle -auto-resize -silent -buffer-name=ag grep:.<cr>
-nnoremap <silent> <leader><leader>/ :Unite -resume -buffer-name=ag grep:.<cr>
+" nnoremap <silent> <leader>/ :Unite -toggle -auto-resize -silent -buffer-name=ag grep:.<cr>
+" nnoremap <silent> <leader><leader>/ :Unite -resume -buffer-name=ag grep:.<cr>
 nnoremap <silent> <leader>y :Unite history/yank<cr>
 nnoremap <silent> <leader>b :Unite -quick-match buffer<cr>
+
+" EasyGrep
+let g:EasyGrepCommand=1
+nnoremap <leader>/ :Grep<space>
 
 " UltiSnip
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
@@ -205,11 +211,12 @@ autocmd VimResized * wincmd =
 
 " Search and Replace
 if executable('ag')
-	function! s:ReplaceInFiles(search, replace)
-		exec "!ag -l " . a:search . " | xargs sed -i 's@" . a:search . "@" . a:replace . "@g'"
-	endfunction
-	command! -nargs=+ ReplaceInFiles call s:ReplaceInFiles(<f-args>)
+	set grepprg=ag\ --nogroup\ --nocolor
 endif
+
+" C++ shortcuts
+nmap <leader>sm ysiw)istd::move<Esc>
+nmap <leader>st ebithis->
 
 syntax enable
 let g:load_doxygen_syntax = 1
