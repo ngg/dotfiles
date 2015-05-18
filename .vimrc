@@ -108,7 +108,7 @@ endif
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
 nnoremap <silent> <C-p> :Unite -start-insert -no-split -buffer-name=file_rec file_rec/async<cr>
-nnoremap <silent> <C-m> :Unite -no-split -buffer-name=outline -auto-preview outline<cr>
+nnoremap <silent> <C-t> :Unite -no-split -buffer-name=outline -auto-preview outline<cr>
 nnoremap <silent> <leader>p :Unite -no-split -buffer-name=mru -auto-preview -quick-match file_mru<cr>
 nnoremap <silent> <leader>y :Unite -buffer-name=yank -quick-match history/yank<cr>
 nnoremap <silent> <leader>b :Unite -buffer-name=buffer -quick-match buffer<cr>
