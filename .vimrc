@@ -14,6 +14,7 @@ Plugin 'tomtom/tcomment_vim'
 Plugin 'gregsexton/gitv'
 Plugin 'Shougo/vimproc.vim'
 Plugin 'Shougo/unite.vim'
+Plugin 'Shougo/unite-outline'
 Plugin 'Shougo/neomru.vim'
 Plugin 'dkprice/vim-easygrep'
 Plugin 'altercation/vim-colors-solarized'
@@ -30,6 +31,7 @@ Plugin 'Chiel92/vim-autoformat'
 Plugin 'Valloric/ListToggle'
 Plugin 'ngg/vim-protobuf'
 Plugin 'rust-lang/rust.vim'
+Plugin 'airblade/vim-gitgutter'
 if (s:hostname =~ "bp1-dsklin")
 	Plugin 'https://bitbucket.org/tresorit/vim-lldb.git'
 	Plugin 'https://bitbucket.org/tresorit/vimtresorit.git'
@@ -55,6 +57,7 @@ set noerrorbells
 set novisualbell
 set t_vb=
 set tm=500
+set number
 
 set t_Co=256
 set mouse=a
@@ -104,13 +107,19 @@ if executable('ag')
 endif
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
-nnoremap <silent> <C-p> :Unite -start-insert -no-split file_rec/async<cr>
-nnoremap <silent> <leader>' :Unite -start-insert -no-split -auto-preview file_rec/git<cr>
-nnoremap <silent> <leader>p :Unite -start-insert -no-split -auto-preview file_mru<cr>
-" nnoremap <silent> <leader>/ :Unite -toggle -auto-resize -silent -buffer-name=ag grep:.<cr>
-" nnoremap <silent> <leader><leader>/ :Unite -resume -buffer-name=ag grep:.<cr>
-nnoremap <silent> <leader>y :Unite history/yank<cr>
-nnoremap <silent> <leader>b :Unite -quick-match buffer<cr>
+nnoremap <silent> <C-p> :Unite -start-insert -no-split -buffer-name=file_rec file_rec/async<cr>
+nnoremap <silent> <C-m> :Unite -no-split -buffer-name=outline -auto-preview outline<cr>
+nnoremap <silent> <leader>p :Unite -no-split -buffer-name=mru -auto-preview -quick-match file_mru<cr>
+nnoremap <silent> <leader>y :Unite -buffer-name=yank -quick-match history/yank<cr>
+nnoremap <silent> <leader>b :Unite -buffer-name=buffer -quick-match buffer<cr>
+
+" gitgutter
+let g:gitgutter_map_keys = 0
+nmap ]h <Plug>GitGutterNextHunk
+nmap [h <Plug>GitGutterPrevHunk
+nmap <leader>hs <Plug>GitGutterStageHunk
+nmap <leader>hr <Plug>GitGutterRevertHunk
+nmap <leader>hp <Plug>GitGutterPreviewHunk
 
 " EasyGrep
 let g:EasyGrepCommand=1
@@ -215,8 +224,7 @@ if executable('ag')
 endif
 
 " C++ shortcuts
-nmap <leader>sm ysiw)istd::move<Esc>
-nmap <leader>st ebithis->
+nmap <silent> <leader>sm ysiw)istd::move<Esc>
 
 syntax enable
 let g:load_doxygen_syntax = 1
