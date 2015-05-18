@@ -15,4 +15,4 @@
 	url = https://github.com/powerline/fonts
 [submodule ".local/share/peda"]
 	path = .local/share/peda
-	url = https://github.com/longld/peda.git
+	url = https://github.com/zachriggle/peda.git
