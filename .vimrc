@@ -9,6 +9,7 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'gregsexton/gitv'
@@ -32,6 +33,7 @@ Plugin 'Valloric/ListToggle'
 Plugin 'ngg/vim-protobuf'
 Plugin 'rust-lang/rust.vim'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'qwertologe/nextval.vim'
 if (s:hostname =~ "bp1-dsklin")
 	Plugin 'https://bitbucket.org/tresorit/vim-lldb.git'
 	Plugin 'https://bitbucket.org/tresorit/vimtresorit.git'
@@ -120,6 +122,10 @@ nmap [h <Plug>GitGutterPrevHunk
 nmap <leader>hs <Plug>GitGutterStageHunk
 nmap <leader>hr <Plug>GitGutterRevertHunk
 nmap <leader>hp <Plug>GitGutterPreviewHunk
+
+" nextval
+nmap <silent> + <Plug>nextvalInc
+nmap <silent> - <Plug>nextvalDec
 
 " EasyGrep
 let g:EasyGrepCommand=1
@@ -245,7 +251,7 @@ nnoremap <silent> <space> :noh<CR><space>
 nnoremap <silent> <leader>gv :Gitv --date-order<CR>
 nnoremap <silent> <leader>gV :Gitv! --date-order<CR>
 
-autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
+" autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
 
 set undodir=~/.vim/undohistory
 set undofile
