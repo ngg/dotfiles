@@ -43,7 +43,6 @@ filetype plugin indent on
 
 set history=1000
 set undolevels=1000
-set autoread
 set so=7
 set hid
 set ignorecase
@@ -85,6 +84,11 @@ set secure
 set nobackup
 set writebackup
 set noswapfile
+
+" Refresh modified files
+set autoread
+set updatetime=1000
+autocmd CursorHold,CursorHoldI,WinEnter,BufWinEnter * silent! checktime
 
 " Share X windows clipboard
 if has('unnamedplus')

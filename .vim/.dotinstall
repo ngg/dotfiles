@@ -1,1 +1,2 @@
 bundle recurse
+undohistory recurse
