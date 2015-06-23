@@ -121,6 +121,7 @@ nnoremap <silent> <leader>b :Unite -buffer-name=buffer -quick-match buffer<cr>
 
 " gitgutter
 let g:gitgutter_map_keys = 0
+let g:gitgutter_max_signs = 5000
 nmap ]h <Plug>GitGutterNextHunk
 nmap [h <Plug>GitGutterPrevHunk
 nmap <leader>hs <Plug>GitGutterStageHunk
