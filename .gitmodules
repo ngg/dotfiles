@@ -16,3 +16,6 @@
 [submodule ".local/share/peda"]
 	path = .local/share/peda
 	url = https://github.com/zachriggle/peda.git
+[submodule ".oh-my-zsh"]
+	path = .oh-my-zsh
+	url = https://github.com/robbyrussell/oh-my-zsh.git
