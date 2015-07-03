@@ -33,7 +33,11 @@ source "$HOME/.env"
 
 #oh-my-zsh
 export ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="blinks"
 DISABLE_AUTO_UPDATE=true
-plugins=(gitfast screen vi-mode z systemadmin zsh_reload)
+plugins=(git screen vi-mode z systemadmin zsh_reload)
+if [[ $+MC_SID = 1 ]]; then
+	ZSH_THEME="sunaku" #"i-dont-want-a-theme"
+else
+	ZSH_THEME="blinks"
+fi
 source $ZSH/oh-my-zsh.sh
