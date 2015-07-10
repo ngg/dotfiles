@@ -34,6 +34,7 @@ Plugin 'ngg/vim-protobuf'
 Plugin 'rust-lang/rust.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'qwertologe/nextval.vim'
+Plugin 'elzr/vim-json'
 if (s:hostname =~ "bp1-dsklin")
 	Plugin 'https://bitbucket.org/tresorit/vim-lldb.git'
 	Plugin 'https://bitbucket.org/tresorit/vimtresorit.git'

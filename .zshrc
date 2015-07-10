@@ -31,13 +31,22 @@ setopt print_exit_value         # print return value if non-zero
 source "$HOME/.alias"
 source "$HOME/.env"
 
-#oh-my-zsh
-export ZSH=$HOME/.oh-my-zsh
+#antigen (oh-my-zsh)
 DISABLE_AUTO_UPDATE=true
-plugins=(git screen vi-mode z systemadmin zsh_reload)
+source $HOME/.local/share/antigen/antigen.zsh
+antigen use oh-my-zsh
+antigen bundles <<EOBUNDLES
+git
+screen
+vi-mode
+z
+systemadmin
+zsh_reload
+zsh-users/zsh-syntax-highlighting
+EOBUNDLES
 if [[ $+MC_SID = 1 ]]; then
-	ZSH_THEME="sunaku" #"i-dont-want-a-theme"
+	antigen theme sunaku
 else
-	ZSH_THEME="blinks"
+	antigen theme blinks
 fi
-source $ZSH/oh-my-zsh.sh
+antigen apply
