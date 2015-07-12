@@ -1,9 +1,6 @@
 defscrollback 100000
 stty -ixon -ixoff
-caption always "%{= dw}%-w%{= BW}%n%t%{-}%+w %-= @%H - %c"
-#caption always '%{= k.}%{.b}[%{.g}%H%{.b}][%= %{.B}%?%-Lw%?%{.r}(%{+b .C}%n*%f %t%?(%u)%?%{-b .r})%{.B}%?%+Lw%?%?%= %{.b}][%{.y}%l%{.b}][%{.c}%m/%d %c%{.b}]%{= dd}'
-caption always '%{= kG}%-Lw%{= kW}%50> %n*%f %t%{= kG}%+Lw%< %{= kG}%-=%D %m/%d/%y | %C:%s %A'
-#attrcolor b ".I"
+caption always '%{= kG}%-Lw%{= kW}%50> %n*%f %t%{= kG}%+Lw%< %{= kG}%-=%D %Y-%m-%d | %c:%s '
 terminfo rxvt-unicode 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
 defbce "on"
 term screen-256color
