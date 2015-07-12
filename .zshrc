@@ -44,9 +44,5 @@ systemadmin
 zsh_reload
 zsh-users/zsh-syntax-highlighting
 EOBUNDLES
-if [[ $+MC_SID = 1 ]]; then
-	antigen theme sunaku
-else
-	antigen theme blinks
-fi
+antigen theme $HOME/.local/share ngg --no-local-clone
 antigen apply
