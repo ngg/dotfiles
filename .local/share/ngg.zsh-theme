@@ -1,17 +1,30 @@
 # Based on blinks theme
 
-if [[ $+MC_SID = 0 ]]; then
+if [[ -z "$MC_SID" ]]; then
 
-ZSH_THEME_GIT_PROMPT_PREFIX=" [%{%F{blue}%}"
-ZSH_THEME_GIT_PROMPT_SUFFIX="%{%F{green}%}]"
-ZSH_THEME_GIT_PROMPT_DIRTY=" %{%F{red}%}*"
+ZSH_THEME_GIT_PROMPT_PREFIX=" %{$fg[green]%}[%{$fg[blue]%}"
+ZSH_THEME_GIT_PROMPT_SUFFIX="%{$fg[green]%}]"
+ZSH_THEME_GIT_PROMPT_DIRTY=" %{$fg[red]%}*"
 ZSH_THEME_GIT_PROMPT_CLEAN=""
 
-PROMPT='\
+ngg_theme_user_host() {
+	if [[ $UID -ne 0 ]]; then
+		echo -n "%{$fg[green]%}%n"
+	else
+		echo -n "%{$fg[red]%}%n"
+	fi
+	echo -n "%{$fg[blue]%}@"
+	echo -n "%{$fg[cyan]%}%M"
+	if [[ ! -z "$SSH_CLIENT" ]]; then
+		echo -n " (%{$fg[yellow]%}SSH %{$fg[cyan]%}from ${SSH_CLIENT%% *})"
+	fi
+}
+
+PROMPT="\
 %{%f%k%b%}
-%{%K{black}%B%F{green}%}%n%{%F{blue}%}@%{%F{cyan}%}%m %{%b%F{yellow}%K{black}%}%~%{%B%F{green}%}$(git_prompt_info)%E
-  %#%{%f%k%b%} '
-PROMPT2='%{%K{black}%F{green}%}  %_>%{%f%k%b%} '
-RPROMPT=''
+%{%B%K{black}%}$(ngg_theme_user_host) %{$fg[yellow]%}%~%{$fg[green]%}"'$(git_prompt_info)'"%E
+  %#%{%f%k%b%} "
+PROMPT2="%{%B%K{black}$fg[green]%}  %_>%{%f%k%b%} "
+RPROMPT=""
 
 fi
