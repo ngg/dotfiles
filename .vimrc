@@ -152,6 +152,7 @@ nnoremap <silent> <leader>mt :ToggleMakeTests<CR>
 nnoremap <silent> <leader>mi :PrintMakeInformation<CR>
 nnoremap <silent> <leader>bf :exec ":Make -j5 " . g:GetBuildFileParams(@%)<CR>
 nnoremap <silent> <leader>bp :exec ":Make! -j5 " . g:GetBuildProjectParams(@%)<CR>
+nnoremap <silent> <leader>bpk :exec ":Make! -j5 -k " . g:GetBuildProjectParams(@%)<CR>
 nnoremap <silent> <leader>ba :exec ":Make! -j5 " . g:GetBuildAllParams(@%)<CR>
 nnoremap <silent> <leader>bak :exec ":Make! -j5 -k " . g:GetBuildAllParams(@%)<CR>
 
