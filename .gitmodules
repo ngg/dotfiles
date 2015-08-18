@@ -9,7 +9,7 @@
 	url = https://github.com/cycojesus/awesome-solarized
 [submodule ".vim/bundle/Vundle.vim"]
 	path = .vim/bundle/Vundle.vim
-	url = https://github.com/gmarik/Vundle.vim
+	url = https://github.com/VundleVim/Vundle.vim
 [submodule ".fonts/powerline"]
 	path = .fonts/powerline
 	url = https://github.com/powerline/fonts

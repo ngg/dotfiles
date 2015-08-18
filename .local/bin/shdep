@@ -1,0 +1,19 @@
+#!/bin/sh
+readelf -WdV $1 | awk -F '[ \t\\[\\]]+' '
+$4 == "Shared" && $5 == "library:" {
+	need[$6] = ""
+}
+$3 == "Version:" && $5 == "File:" && $7 == "Cnt:" {
+	cur = $6
+}
+$3 == "Name:" && $5 == "Flags:" && $7 == "Version:" {
+	need[cur] = need[cur] $4 " "
+}
+END {
+	for (lib in need) {
+		printf "%s: ", lib
+		system("echo " need[lib] " | tr \" \" \"\n\" | sort -t_ -k 1,2V | tr \"\n\" \" \"")
+		print ""
+	}
+}
+' | sort
