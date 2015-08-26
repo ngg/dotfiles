@@ -1,49 +1,111 @@
-#zkbd
-autoload zkbd
-[[ ! -d ~/.zkbd ]] && mkdir ~/.zkbd
-[[ ! -f ~/.zkbd/$TERM-$VENDOR-$OSTYPE ]] && zkbd
-source  ~/.zkbd/$TERM-$VENDOR-$OSTYPE
-bindkey -v
-[[ -n "${key[PageUp]}"   ]]  && bindkey  "${key[PageUp]}"   history-beginning-search-backward
-[[ -n "${key[PageDown]}" ]]  && bindkey  "${key[PageDown]}" history-beginning-search-forward
-[[ -n "${key[Home]}"     ]]  && bindkey  "${key[Home]}"     beginning-of-line
-[[ -n "${key[End]}"      ]]  && bindkey  "${key[End]}"      end-of-line
-[[ -n "${key[Insert]}"   ]]  && bindkey  "${key[Insert]}"   overwrite-mode
-[[ -n "${key[Delete]}"   ]]  && bindkey  "${key[Delete]}"   delete-char
-[[ -n "${key[Up]}"       ]]  && bindkey  "${key[Up]}"       history-substring-search-up
-[[ -n "${key[Down]}"     ]]  && bindkey  "${key[Down]}"     history-substring-search-down
-[[ -n "${key[Left]}"     ]]  && bindkey  "${key[Left]}"     backward-char
-[[ -n "${key[Right]}"    ]]  && bindkey  "${key[Right]}"    forward-char
+##
+# Zgen and Prezto
+##
+source "${HOME}/.local/share/zgen/zgen.zsh"
+
+# Autoreload if .zshrc has changed
+ZGEN_RESET_ON_CHANGE=("$(realpath ~/.zshrc)")
+
+# Load zgen
+if ! zgen saved; then
+	# Set case-sensitivity for completion, history lookup, etc.
+	zgen prezto "*" case-sensitive 'no'
+
+	# Color output (auto set to 'no' on dumb terminals)
+	zgen prezto "*" color 'yes'
+
+	# Set the key mapping style to 'emacs' or 'vi'
+	zgen prezto editor key-bindings 'vi'
+
+	# Auto convert .... to ../..
+	zgen prezto editor dot-expansion 'yes'
+
+	# Ignore submodules when they are 'dirty', 'untracked', 'all', or 'none'
+	zgen prezto git:status:ignore submodules 'all'
+
+	# Custom theme
+	zgen prezto prompt theme 'cylon'
+
+	# Auto set the tab and window titles
+	zgen prezto terminal auto-title 'yes'
+
+	# Set the Prezto modules to load (the order matters)
+	ZGEN_PREZTO_LOAD_DEFAULT=0
+	zgen prezto
+	zgen prezto archive
+	zgen prezto environment
+	zgen prezto terminal
+	zgen prezto editor
+	zgen prezto history
+	zgen prezto directory
+	zgen prezto utility
+	zgen prezto completion
+	zgen prezto prompt
+	zgen prezto git
+	zgen prezto tmux
+	zgen prezto syntax-highlighting
+	zgen prezto history-substring-search
+
+	# Other plugins
+	zgen load radhermit/gentoo-zsh-completions src
+	zgen load t413/zsh-background-notify
+	zgen load ${HOME}/.local/share/zsh-prompt-cylon
+
+	# Save all to init script
+	zgen save
+fi
+
+
+##
+# Custom options
+##
+setopt nonomatch # pass the unevaluated argument like bash
+setopt print_exit_value
+unsetopt rm_star_silent
+unsetopt share_history
+
+
+##
+# Custom keys
+##
+
+# History search
+bindkey "$key_info[PageUp]" history-substring-search-up
+bindkey "$key_info[PageDown]" history-substring-search-down
+
+# Open man page for current command
+bindkey "^Xm" run-help
+
+# Control + arrows to navigate words
+for key in "${(s: :)key_info[ControlLeft]}"
+	bindkey -M viins "$key" backward-word
+for key in "${(s: :)key_info[ControlRight]}"
+	bindkey -M viins "$key" forward-word
+
+
+##
+# Shared resources
+##
+source "$HOME/.alias"
+source "$HOME/.env"
+
+
+##
+# Get notified when someone logs in
+##
+watch=all                       # watch all logins
+logcheck=30                     # every 30 seconds
+WATCHFMT="%n from %M has %a tty%l at %T %W"
+
 
 #mime
 autoload -U zsh-mime-setup
 zsh-mime-setup  # run everything as if it's an executable
 
+
 #various
 setopt glob_dots                # include dotfiles in globbing
-unsetopt bg_nice                # no lower prio for background jobs
 unsetopt list_beep              # no bell on ambiguous completion
 unsetopt hist_beep              # no bell on error in history
 unsetopt beep                   # no bell on error
 setopt print_exit_value         # print return value if non-zero
-
-#env
-source "$HOME/.alias"
-source "$HOME/.env"
-
-#antigen (oh-my-zsh)
-DISABLE_AUTO_UPDATE=true
-source $HOME/.local/share/antigen/antigen.zsh
-antigen use oh-my-zsh
-antigen bundles <<EOBUNDLES
-git
-screen
-vi-mode
-z
-systemadmin
-zsh_reload
-history-substring-search
-zsh-users/zsh-syntax-highlighting
-EOBUNDLES
-antigen theme $HOME/.local/share ngg --no-local-clone
-antigen apply

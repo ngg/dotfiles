@@ -1,0 +1,136 @@
+# Load dependencies.
+pmodload 'helper'
+
+CURRENT_BG='NONE'
+SEGMENT_SEPARATOR=''
+
+
+# Begin a segment
+# Takes two arguments, background and foreground. Both can be omitted,
+# rendering default background/foreground.
+prompt_segment() {
+	local bg fg
+	[[ -n $1 ]] && bg="%K{$1}" || bg="%k"
+	[[ -n $2 ]] && fg="%F{$2}" || fg="%f"
+	if [[ $CURRENT_BG != 'NONE' && $1 != $CURRENT_BG ]]; then
+		echo -n " %{$bg%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR%{$fg%} "
+	else
+		echo -n "%{$bg%}%{$fg%} "
+	fi
+	CURRENT_BG=$1
+	[[ -n $3 ]] && print -Pn $3
+}
+
+# End the prompt, closing any open segments
+prompt_end() {
+	if [[ -n $CURRENT_BG ]]; then
+		echo -n " %{%k%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR"
+	else
+		echo -n "%{%k%}"
+	fi
+	echo -n "%{%f%}"
+	CURRENT_BG=''
+}
+
+get_user_host() {
+	if [[ $UID -ne 0 ]]; then
+		echo -n "%{%F{green}%}%n"
+	else
+		echo -n "%{%F{red}%}%n"
+	fi
+	echo -n "%{%F{default}%}@"
+	echo -n "%{%F{blue}%}%M"
+	if [[ ! -z "$SSH_CONNECTION" ]]; then
+		echo -n " (%{%F{yellow}%}SSH %{%F{cyan}%}from ${SSH_CONNECTION%% *})"
+	fi
+}
+
+function build_prompt {
+	echo -n "%{%B%}" # bold prompt
+	get_user_host
+	prompt_segment default yellow '%~'
+	if $git_status; then
+		prompt_segment default blue '%{%F{green}%}[%{%F{blue}%}${(e)git_info[prompt]}${git_info[status]}%{%F{green}%}]'
+	fi
+	prompt_end
+}
+
+start_time=$SECONDS
+function prompt_cylon_preexec {
+	start_time=$SECONDS
+}
+
+function calc_elapsed_time {
+	if [[ $timer_result -ge 3600 ]]; then
+		let "timer_hours = $timer_result / 3600"
+		let "remainder = $timer_result % 3600"
+		let "timer_minutes = $remainder / 60"
+		let "timer_seconds = $remainder % 60"
+		print -P "%B%F{red}>>> elapsed time ${timer_hours}h ${timer_minutes}m ${timer_seconds}s%b"
+	elif [[ $timer_result -ge 60 ]]; then
+		let "timer_minutes = $timer_result / 60"
+		let "timer_seconds = $timer_result % 60"
+		print -P "%B%F{yellow}>>> elapsed time ${timer_minutes}m ${timer_seconds}s%b"
+	elif [[ $timer_result -gt 5 ]]; then
+		print -P "%B%F{green}>>> elapsed time ${timer_result}s%b"
+	fi
+}
+
+function prompt_cylon_precmd {
+	setopt LOCAL_OPTIONS
+	unsetopt XTRACE KSH_ARRAYS
+
+	# Get Git repository information.
+	if (( $+functions[git-info] )); then
+		git_status=git-info
+	fi
+	timer_result=$(($SECONDS-$start_time))
+	if [[ $timer_result -gt 10 ]]; then
+		calc_elapsed_time
+	fi
+	start_time=$SECONDS
+}
+
+function prompt_cylon_setup {
+	setopt LOCAL_OPTIONS
+	unsetopt XTRACE KSH_ARRAYS
+	prompt_opts=(cr percent subst)
+
+	# Load required functions.
+	autoload -Uz add-zsh-hook
+
+	# Add hook for calling git-info before each command.
+	add-zsh-hook preexec prompt_cylon_preexec
+	add-zsh-hook precmd prompt_cylon_precmd
+
+	zstyle ':prezto:module:editor:info:completing' format '%B%F{red}...%f%b'
+	if [[ $UID -ne 0 ]]; then
+		zstyle ':prezto:module:editor:info:keymap:primary' format "%B%F{green}%#%f%b"
+	else
+		zstyle ':prezto:module:editor:info:keymap:primary' format "%B%F{red}%#%f%b"
+	fi
+	zstyle ':prezto:module:editor:info:keymap:primary:overwrite' format "%F{blue}%#%f"
+	zstyle ':prezto:module:editor:info:keymap:alternate' format "%B%F{blue}%#%f%b"
+	# zstyle ':prezto:module:git:info' verbose 'yes'
+	zstyle ':prezto:module:git:info:action' format '%s'
+	zstyle ':prezto:module:git:info:branch' format '%b'
+	zstyle ':prezto:module:git:info:commit' format '%c'
+	zstyle ':prezto:module:git:info:position' format '%p'
+	zstyle ':prezto:module:git:info:dirty' format ' %{%F{red}%}*'
+	zstyle ':prezto:module:git:info:keys' format \
+		'prompt' '$(coalesce "%b" "%p" "%c")%s' \
+		'status' '%D'
+
+	# Define prompts.
+	lineup=$'\e[1A'
+	linedown=$'\e[1B'
+
+	PROMPT='
+$(build_prompt)%E
+ ${editor_info[keymap]} %{%k%b%f%}'
+	RPROMPT='%{${lineup}%}%{%b%}%D{%a %Y-%m-%d | %H:%M:%S}%{${linedown}%k%}'
+	PROMPT2="%{%B%F{green}%}  %_>%{%f%k%b%} "
+	SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
+}
+
+prompt_cylon_setup "$@"

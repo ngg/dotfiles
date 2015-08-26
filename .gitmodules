@@ -19,3 +19,6 @@
 [submodule ".local/share/antigen"]
 	path = .local/share/antigen
 	url = https://github.com/zsh-users/antigen
+[submodule ".local/share/zgen"]
+	path = .local/share/zgen
+	url = https://github.com/m42e/zgen
