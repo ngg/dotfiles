@@ -42,7 +42,6 @@ if ! zgen saved; then
 	zgen prezto completion
 	zgen prezto prompt
 	zgen prezto git
-	zgen prezto tmux
 	zgen prezto syntax-highlighting
 	zgen prezto history-substring-search
 
@@ -63,6 +62,10 @@ setopt nonomatch # pass the unevaluated argument like bash
 setopt print_exit_value
 unsetopt rm_star_silent
 unsetopt share_history
+setopt glob_dots                # include dotfiles in globbing
+unsetopt list_beep              # no bell on ambiguous completion
+unsetopt hist_beep              # no bell on error in history
+unsetopt beep                   # no bell on error
 
 
 ##
@@ -96,16 +99,3 @@ source "$HOME/.env"
 watch=all                       # watch all logins
 logcheck=30                     # every 30 seconds
 WATCHFMT="%n from %M has %a tty%l at %T %W"
-
-
-#mime
-autoload -U zsh-mime-setup
-zsh-mime-setup  # run everything as if it's an executable
-
-
-#various
-setopt glob_dots                # include dotfiles in globbing
-unsetopt list_beep              # no bell on ambiguous completion
-unsetopt hist_beep              # no bell on error in history
-unsetopt beep                   # no bell on error
-setopt print_exit_value         # print return value if non-zero
