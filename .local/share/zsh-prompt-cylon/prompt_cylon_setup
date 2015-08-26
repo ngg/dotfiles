@@ -55,7 +55,7 @@ function build_prompt {
 	prompt_end
 }
 
-start_time=$SECONDS
+start_time=
 function prompt_cylon_preexec {
 	start_time=$SECONDS
 }
@@ -84,11 +84,13 @@ function prompt_cylon_precmd {
 	if (( $+functions[git-info] )); then
 		git_status=git-info
 	fi
-	timer_result=$(($SECONDS-$start_time))
-	if [[ $timer_result -gt 10 ]]; then
-		calc_elapsed_time
+	if [[ -n $start_time ]]; then
+		timer_result=$(($SECONDS-$start_time))
+		if [[ $timer_result -gt 10 ]]; then
+			calc_elapsed_time
+		fi
+		start_time=
 	fi
-	start_time=$SECONDS
 }
 
 function prompt_cylon_setup {
