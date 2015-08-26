@@ -48,7 +48,10 @@ if ! zgen saved; then
 	# Other plugins
 	zgen load radhermit/gentoo-zsh-completions src
 	zgen load t413/zsh-background-notify
-	zgen load ${HOME}/.local/share/zsh-prompt-cylon
+
+	# Custom theme
+	zgen load ngg/zsh-prompt-cylon
+	zgen prezto prompt theme 'cylon'
 
 	# Save all to init script
 	zgen save
