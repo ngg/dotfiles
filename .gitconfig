@@ -47,3 +47,5 @@
 	trustExitCode = true
 [mergetool "bc4"]
 	cmd = bcompare \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
+[fetch]
+	prune = true
