@@ -4,6 +4,8 @@ filetype off
 " Hostname for host specific configuration
 let s:hostname = substitute(system('hostname'), '\n', '', '')
 
+let g:vundle_default_git_proto='git'
+
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
@@ -36,8 +38,8 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'qwertologe/nextval.vim'
 Plugin 'elzr/vim-json'
 if (s:hostname =~ "bp1-dsklin")
-	Plugin 'https://bitbucket.org/tresorit/vim-lldb.git'
-	Plugin 'https://bitbucket.org/tresorit/vimtresorit.git'
+	Plugin 'git@bitbucket.org:tresorit/vim-lldb.git'
+	Plugin 'git@bitbucket.org:tresorit/vimtresorit.git'
 endif
 call vundle#end()
 filetype plugin indent on
