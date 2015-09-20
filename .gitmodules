@@ -18,4 +18,4 @@
 	url = https://github.com/zachriggle/peda.git
 [submodule ".local/share/zgen"]
 	path = .local/share/zgen
-	url = https://github.com/m42e/zgen
+	url = https://github.com/tarjoilija/zgen
