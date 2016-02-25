@@ -349,7 +349,7 @@ for i = 1, 9 do
 end
 
 clientbuttons = awful.util.table.join(
-    awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
+--    awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
     awful.button({ modkey }, 1, awful.mouse.client.move),
     awful.button({ modkey }, 3, awful.mouse.client.resize))
 
@@ -456,3 +456,6 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 os.execute("xcompmgr -c &")
 os.execute("xscreensaver -no-splash &")
 os.execute("parcellite &")
+os.execute("roccat-notifier &")
+os.execute("tresorit --hidden &")
+os.execute("tresorit-control-panel &")

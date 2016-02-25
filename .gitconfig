@@ -49,3 +49,5 @@
 	cmd = bcompare \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
 [fetch]
 	prune = true
+[tag]
+	sort = version:refname
