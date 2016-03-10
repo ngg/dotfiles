@@ -30,6 +30,7 @@
 	tool = vimdiff
 	guitool = bc4
 	algorithm = histogram
+	renameLimit = 100000
 [difftool]
 	prompt = false
 [difftool "bc4"]

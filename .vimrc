@@ -19,6 +19,7 @@ Plugin 'Shougo/vimproc.vim'
 Plugin 'Shougo/unite.vim'
 Plugin 'Shougo/unite-outline'
 Plugin 'Shougo/neomru.vim'
+Plugin 'Shougo/neoyank.vim'
 Plugin 'dkprice/vim-easygrep'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'Lokaltog/vim-easymotion'
@@ -90,6 +91,9 @@ set nobackup
 set writebackup
 set noswapfile
 
+scriptencoding utf-8
+set encoding=utf-8
+
 " Refresh modified files
 set autoread
 set updatetime=1000
@@ -148,12 +152,17 @@ let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " VimTresorit
-noremap <silent> <F3> :Autoformat<CR><CR>
-nnoremap <silent> <leader>mh :ToggleMakeHost<CR>
+noremap <silent> <F3> :Autoformat<CR>
+noremap <silent> <leader>ff :Autoformat<CR>
+noremap <silent> <leader>ft :ToggleAutoFormatCode<CR>
 nnoremap <silent> <leader>mc :ToggleMakeCompiler<CR>
 nnoremap <silent> <leader>md :ToggleMakeDebug<CR>
 nnoremap <silent> <leader>mt :ToggleMakeTests<CR>
 nnoremap <silent> <leader>mi :PrintMakeInformation<CR>
+nnoremap <leader>bc :CreateOutDir<space>
+nnoremap <silent> <leader>be :EditCurrentOutDir<CR>
+nnoremap <silent> <leader>bo :Unite -start-insert -no-split gn_out<CR>
+nnoremap <silent> <leader>bt :Unite -start-insert -no-split gn_target<CR>
 nnoremap <silent> <leader>bf :exec ":Make -j5 " . g:GetBuildFileParams(@%)<CR>
 nnoremap <silent> <leader>bp :exec ":Make! -j5 " . g:GetBuildProjectParams(@%)<CR>
 nnoremap <silent> <leader>bpk :exec ":Make! -j5 -k " . g:GetBuildProjectParams(@%)<CR>
