@@ -23,9 +23,6 @@ if ! zgen saved; then
 	# Ignore submodules when they are 'dirty', 'untracked', 'all', or 'none'
 	zgen prezto git:status:ignore submodules 'all'
 
-	# Custom theme
-	zgen prezto prompt theme 'cylon'
-
 	# Auto set the tab and window titles
 	zgen prezto terminal auto-title 'yes'
 
