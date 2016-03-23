@@ -45,6 +45,8 @@ if ! zgen saved; then
 	# Other plugins
 	zgen load radhermit/gentoo-zsh-completions src
 	zgen load t413/zsh-background-notify
+	zgen load djui/alias-tips
+	zgen load unixorn/autoupdate-zgen
 
 	# Custom theme
 	zgen load ngg/zsh-prompt-cylon
