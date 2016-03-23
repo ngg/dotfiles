@@ -18,7 +18,7 @@ if ! zgen saved; then
 	zgen prezto editor key-bindings 'vi'
 
 	# Auto convert .... to ../..
-	zgen prezto editor dot-expansion 'yes'
+	zgen prezto editor dot-expansion 'no'
 
 	# Ignore submodules when they are 'dirty', 'untracked', 'all', or 'none'
 	zgen prezto git:status:ignore submodules 'all'

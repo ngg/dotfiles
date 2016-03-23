@@ -52,3 +52,5 @@
 	prune = true
 [tag]
 	sort = version:refname
+[rebase]
+	autostash = true
