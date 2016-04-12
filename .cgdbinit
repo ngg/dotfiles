@@ -1,0 +1,2 @@
+pset option ansicolor off
+set prompt (cgdb) 
