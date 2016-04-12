@@ -191,7 +191,7 @@ map <leader>k <Plug>(easymotion-k)
 "map N <Plug>(easymotion-prev)
 
 " YCM
-let g:ycm_extra_conf_globlist = ['~/git/*', '!~/*']
+let g:ycm_extra_conf_globlist = ['~/git/*', '~/.vim/ycm_extra_conf.py', '!~/*']
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_always_populate_location_list = 1
@@ -200,6 +200,7 @@ let g:ycm_warning_symbol = 'W>'
 let g:ycm_complete_in_comments = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_key_invoke_completion = '<C-Space>'
+let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 nnoremap <silent> <leader>g :YcmCompleter GoTo<CR>
 
 " ListToggle
