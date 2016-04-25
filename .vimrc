@@ -108,7 +108,7 @@ endif
 let g:leave_my_textwidth_alone = 1
 
 " Save as root
-cmap w!! w !sudo tee % >/dev/null
+command! W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 
 " Unite
 let g:unite_prompt='» '
