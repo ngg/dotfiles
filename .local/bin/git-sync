@@ -1,0 +1,15 @@
+#!/bin/sh
+USAGE='<branch>'
+LONG_USAGE='Syncs branch to its upstream.'
+SUBDIRECTORY_OK=Yes
+OPTIONS_SPEC=
+. git-sh-setup || exit $?
+set_reflog_action "sync $*"
+BRANCH=$1
+BRANCHREF="refs/heads/$BRANCH"
+COMMIT=`git rev-parse --verify $BRANCHREF` || exit $?
+REMOTE=`git rev-parse --abbrev-ref --symbolic-full-name --verify $BRANCH@\{u\}` || die "no upstream found"
+BASE=`git merge-base $BRANCHREF $REMOTE` || exit $?
+NEWCOMMIT=`git rev-parse --verify $REMOTE` || exit $?
+[ "x$BASE" = "x$COMMIT" ] || die "cannot fast-forward branch"
+git update-ref -m "sync: Reset to upstream $REMOTE" $BRANCHREF $NEWCOMMIT || exit $?
