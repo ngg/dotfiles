@@ -23,6 +23,9 @@ if ! zgen saved; then
 	# Ignore submodules when they are 'dirty', 'untracked', 'all', or 'none'
 	zgen prezto git:status:ignore submodules 'all'
 
+	# Override git log oneline format
+	zgen prezto git:log:oneline format '%C(green)%h%C(reset) -%C(yellow)%d%C(reset) %s %C(green)(%cr) %C(blue)<%an>%C(reset)'
+
 	# Auto set the tab and window titles
 	zgen prezto terminal auto-title 'yes'
 
@@ -101,3 +104,9 @@ source "$HOME/.env"
 watch=all                       # watch all logins
 logcheck=30                     # every 30 seconds
 WATCHFMT="%n from %M has %a tty%l at %T %W"
+
+
+##
+# Misc
+##
+export ZSH_PLUGINS_ALIAS_TIPS_EXCLUDES="_ g"

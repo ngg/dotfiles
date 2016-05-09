@@ -8,6 +8,16 @@ alias es="sudo eix-sync -H"
 alias rm-unite-cache="rm -rf ~/.cache/unite"
 alias cgdb="cgdb -- -x ~/.cgdbinit"
 
+# Override some git aliases
+alias gbl='git branch -vv'
+alias gbL='git branch -avv'
+alias gl='git log --date-order --pretty=format:"${_git_log_medium_format}"'
+alias gls='git log --date-order --stat --pretty=format:"${_git_log_medium_format}"'
+alias gld='git log --date-order --stat --patch --full-diff --pretty=format:"${_git_log_medium_format}"'
+alias glo='git log --date-order --pretty=format:"${_git_log_oneline_format}"'
+alias glg='git log --date-order --all --graph --pretty=format:"${_git_log_oneline_format}"'
+alias glb='git log --date-order --pretty=format:"${_git_log_brief_format}"'
+
 if [ -f "$HOME/.alias.local" ]; then
 	. "$HOME/.alias.local"
 fi
