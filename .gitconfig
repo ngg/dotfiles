@@ -54,3 +54,7 @@
 	sort = version:refname
 [rebase]
 	autostash = true
+[web]
+	browser = xdg-open
+[instaweb]
+	local = true
