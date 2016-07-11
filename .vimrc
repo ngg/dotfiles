@@ -13,6 +13,7 @@ Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-abolish'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'gregsexton/gitv'
 Plugin 'Shougo/vimproc.vim'
@@ -41,7 +42,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'qwertologe/nextval.vim'
 Plugin 'elzr/vim-json'
 if (s:hostname =~ "bp1-dsklin")
-	Plugin 'git@bitbucket.org:tresorit/vim-lldb.git'
+    " Plugin 'git@bitbucket.org:tresorit/vim-lldb.git'
 	Plugin 'git@bitbucket.org:tresorit/vimtresorit.git'
 endif
 call vundle#end()
@@ -273,6 +274,7 @@ nnoremap <silent> <leader>gv :Gitv --date-order<CR>
 nnoremap <silent> <leader>gV :Gitv! --date-order<CR>
 
 " autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
+autocmd FileType c,cpp,objc,objcpp setlocal comments-=:// comments+=f://
 
 set undodir=~/.vim/undohistory
 set undofile
