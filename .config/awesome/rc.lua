@@ -72,11 +72,12 @@ local layouts =
 -- }}}
 
 -- {{{ Wallpaper
-if beautiful.wallpaper then
-    for s = 1, screen.count() do
-        gears.wallpaper.maximized(beautiful.wallpaper, s, true)
-    end
-end
+--if beautiful.wallpaper then
+--    for s = 1, screen.count() do
+--        gears.wallpaper.maximized(beautiful.wallpaper, s, true)
+--    end
+--end
+gears.wallpaper.maximized(awful.util.getdir("config").."/bg.png", nil, false)
 -- }}}
 
 -- {{{ Tags
@@ -453,9 +454,16 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
-os.execute("xcompmgr -c &")
-os.execute("xscreensaver -no-splash &")
-os.execute("parcellite &")
-os.execute("roccat-notifier &")
-os.execute("tresorit --hidden &")
-os.execute("tresorit-control-panel &")
+function run_once(cmd,findme)
+    if not findme then
+        findme = cmd
+    end
+    awful.util.spawn_with_shell("pgrep -f -u $USER -x \"" .. findme .. "\" > /dev/null || (" .. cmd .. ")")
+end
+
+run_once("xcompmgr -c")
+run_once("xscreensaver -no-splash")
+run_once("parcellite")
+run_once("roccat-notifier", "/usr/bin/python2.7 $HOME/.local/bin/roccat-notifier")
+run_once("tresorit --hidden")
+run_once("tresorit-control-panel", "/usr/bin/python2.7 $HOME/.local/bin/tresorit-control-panel")
