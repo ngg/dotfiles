@@ -78,6 +78,7 @@ URxvt*scrollTtyOutput: false
 URxvt*scrollWithBuffer: false
 URxvt*secondaryScreen: true
 URxvt*secondaryScroll: true
+URxvt*secondaryWheel: true
 URxvt*skipScroll: true
 URxvt*scrollBar: false
 URxvt*scrollBar_right: false
