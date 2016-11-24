@@ -11,6 +11,11 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 
+hostname = io.lines("/proc/sys/kernel/hostname")()
+if string.match(hostname, "bp1-dsklin") ~= nil then
+    hostname = "bp1-dsklin"
+end
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -77,7 +82,11 @@ local layouts =
 --        gears.wallpaper.maximized(beautiful.wallpaper, s, true)
 --    end
 --end
-gears.wallpaper.maximized(awful.util.getdir("config").."/bg.png", nil, false)
+bgname = "bg.png"
+if hostname == "ngghp" then
+    bgname = "bg-ngghp.jpg"
+end
+gears.wallpaper.maximized(awful.util.getdir("config").."/"..bgname, nil, false)
 -- }}}
 
 -- {{{ Tags
@@ -466,6 +475,13 @@ end
 run_once("xcompmgr -c")
 run_once("xscreensaver -no-splash")
 run_once("parcellite")
-run_once("roccat-notifier", "/usr/bin/python2.7 $HOME/.local/bin/roccat-notifier")
 run_once("tresorit --hidden")
-run_once("tresorit-control-panel", "/usr/bin/python2.7 $HOME/.local/bin/tresorit-control-panel")
+
+if hostname == "bp1-dsklin" then
+    run_once("roccat-notifier", "/usr/bin/python2.7 $HOME/.local/bin/roccat-notifier")
+    run_once("tresorit-control-panel", "/usr/bin/python2.7 $HOME/.local/bin/tresorit-control-panel")
+end
+
+if hostname == "ngghp" then
+    run_once("transmission-qt")
+end
