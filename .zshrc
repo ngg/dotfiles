@@ -110,3 +110,7 @@ WATCHFMT="%n from %M has %a tty%l at %T %W"
 # Misc
 ##
 export ZSH_PLUGINS_ALIAS_TIPS_EXCLUDES="_ g"
+
+if [[ -f "$HOME/git/CoreTools/GoogleTestCompletion.sh" ]]; then
+    source "$HOME/git/CoreTools/GoogleTestCompletion.sh"
+fi
