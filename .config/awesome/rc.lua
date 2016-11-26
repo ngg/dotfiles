@@ -5,6 +5,7 @@ awful.rules = require("awful.rules")
 require("awful.autofocus")
 -- Widget and layout library
 local wibox = require("wibox")
+local timer = require("timer")
 -- Theme handling library
 local beautiful = require("beautiful")
 -- Notification library
@@ -123,6 +124,20 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- Create a textclock widget
 mytextclock = awful.widget.textclock()
 
+-- Create a battery widget
+if hostname == "ngghp" then
+    mybattery = wibox.widget.textbox()
+    function mybatteryupdate()
+        fh = assert(io.popen("acpi | cut -d, -f 2,3 -", "r"))
+        mybattery:set_text(" |" .. fh:read("*l") .. " |")
+        fh:close()
+    end
+    mybatteryupdate()
+    mybatterytimer = timer({ timeout = 5 })
+    mybatterytimer:connect_signal("timeout", mybatteryupdate)
+    mybatterytimer:start()
+end
+
 -- Create a wibox for each screen and add it
 mywibox = {}
 mypromptbox = {}
@@ -202,6 +217,7 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
+    if hostname == "ngghp" then right_layout:add(mybattery) end
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
 
