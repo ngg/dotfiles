@@ -42,8 +42,8 @@ Plugin 'rust-lang/rust.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'qwertologe/nextval.vim'
 Plugin 'elzr/vim-json'
+Plugin 'Yggdroot/indentLine'
 if (s:hostname =~ "bp1-dsklin")
-    " Plugin 'git@bitbucket.org:tresorit/vim-lldb.git'
 	Plugin 'git@bitbucket.org:tresorit/vimtresorit.git'
 endif
 call vundle#end()
@@ -210,21 +210,8 @@ let g:lt_location_list_toggle_map = '<leader>l'
 let g:lt_quickfix_list_toggle_map = '<leader>q'
 let g:lt_height = 15
 
-" LLDB
-nnoremap <silent> <F8> :Lcontinue<CR>
-nnoremap <silent> <F9> :Lbreakpoint<CR>
-nnoremap <silent> <F10> :Lnext<CR>
-nnoremap <silent> <F11> :Lstep<CR>
-nnoremap <silent> <leader><F11> :Lfinish<CR>
-function! g:StartDebug(program, args)
-	exec "Ltarget " . a:program
-	exec "Lbreakpoint set --name main"
-	exec "Lhide disassembly"
-	exec "Lhide registers"
-	exec "Lstart " . a:args
-endfunction
-nnoremap <F5> :call StartDebug(g:GetTresoritCLIPath(), "")<Left><Left>
-nnoremap <leader><F5> :call StartDebug(g:GetTresoritTestPath(), "-t " . expand("<cword>" . ""))<Left><Left><Left>
+" indentLine
+let g:indentLine_color_term = 0
 
 " Better regex syntax
 nnoremap / /\v
