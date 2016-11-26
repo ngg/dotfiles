@@ -6,7 +6,7 @@
 	url = https://github.com/seebi/dircolors-solarized
 [submodule ".config/awesome/themes/awesome-solarized"]
 	path = .config/awesome/themes/awesome-solarized
-	url = https://github.com/cycojesus/awesome-solarized
+	url = https://github.com/ngg/awesome-solarized
 [submodule ".vim/bundle/Vundle.vim"]
 	path = .vim/bundle/Vundle.vim
 	url = https://github.com/VundleVim/Vundle.vim
