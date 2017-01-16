@@ -8,6 +8,7 @@ set_reflog_action "sync $*"
 BRANCH=$1
 BRANCHREF="refs/heads/$BRANCH"
 COMMIT=`git rev-parse --verify $BRANCHREF` || exit $?
+git worktree list --porcelain | grep "branch $BRANCHREF" >/dev/null && die "branch is currently checked out"
 REMOTE=`git rev-parse --abbrev-ref --symbolic-full-name --verify $BRANCH@\{u\}` || die "no upstream found"
 BASE=`git merge-base $BRANCHREF $REMOTE` || exit $?
 NEWCOMMIT=`git rev-parse --verify $REMOTE` || exit $?
