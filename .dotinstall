@@ -1,5 +1,6 @@
 README.md skip
 .gitignore skip
 .config recurse
+.ipython recurse
 .local recurse
 .vim recurse
