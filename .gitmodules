@@ -7,9 +7,6 @@
 [submodule ".config/awesome/themes/awesome-solarized"]
 	path = .config/awesome/themes/awesome-solarized
 	url = https://github.com/ngg/awesome-solarized
-[submodule ".vim/bundle/Vundle.vim"]
-	path = .vim/bundle/Vundle.vim
-	url = https://github.com/VundleVim/Vundle.vim
 [submodule ".fonts/powerline"]
 	path = .fonts/powerline
 	url = https://github.com/powerline/fonts
@@ -19,3 +16,6 @@
 [submodule ".local/share/zgen"]
 	path = .local/share/zgen
 	url = https://github.com/tarjoilija/zgen
+[submodule ".local/share/vim-plug"]
+	path = .local/share/vim-plug
+	url = https://github.com/junegunn/vim-plug

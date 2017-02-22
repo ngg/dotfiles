@@ -1,53 +1,46 @@
-set nocompatible
-filetype off
-
 " Hostname for host specific configuration
 let s:hostname = substitute(system('hostname'), '\n', '', '')
 
-let g:vundle_default_git_proto='git'
-
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'tpope/vim-dispatch'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-abolish'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'tomtom/tcomment_vim'
-Plugin 'gregsexton/gitv'
-Plugin 'Shougo/vimproc.vim'
-Plugin 'Shougo/unite.vim'
-Plugin 'Shougo/unite-outline'
-Plugin 'Shougo/neomru.vim'
-Plugin 'Shougo/neoyank.vim'
-Plugin 'dkprice/vim-easygrep'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'mbbill/undotree'
-Plugin 'Kris2k/A.vim'
-Plugin 'kris89/vim-multiple-cursors'
-" Plugin 'SirVer/ultisnips'
-Plugin 'wikitopian/hardmode'
-Plugin 'octol/vim-cpp-enhanced-highlight'
-Plugin 'Chiel92/vim-autoformat'
-Plugin 'Valloric/ListToggle'
-Plugin 'ngg/vim-protobuf'
-Plugin 'ngg/vim-gn'
-Plugin 'rust-lang/rust.vim'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'qwertologe/nextval.vim'
-Plugin 'elzr/vim-json'
-Plugin 'Yggdroot/indentLine'
+call plug#begin('~/.vim/plugged')
+Plug 'VundleVim/Vundle.vim'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-unimpaired'
+Plug 'tomtom/tcomment_vim'
+Plug 'gregsexton/gitv'
+Plug 'Shougo/vimproc.vim', {'do': 'make'}
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/unite-outline'
+Plug 'Shougo/neomru.vim'
+Plug 'Shougo/neoyank.vim'
+Plug 'dkprice/vim-easygrep'
+Plug 'altercation/vim-colors-solarized'
+Plug 'Lokaltog/vim-easymotion'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'Valloric/YouCompleteMe', {'do': './install.py --clang-completer --system-libclang --system-boost', 'for': ['c', 'cpp', 'python', 'objc', 'objcpp']}
+Plug 'mbbill/undotree'
+Plug 'derekwyatt/vim-fswitch'
+Plug 'kris89/vim-multiple-cursors'
+" Plug 'SirVer/ultisnips'
+Plug 'wikitopian/hardmode'
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'Chiel92/vim-autoformat'
+Plug 'Valloric/ListToggle'
+Plug 'ngg/vim-protobuf'
+Plug 'ngg/vim-gn'
+Plug 'rust-lang/rust.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'qwertologe/nextval.vim'
+Plug 'elzr/vim-json'
+Plug 'Yggdroot/indentLine'
 if (s:hostname =~ "bp1-dsklin")
-	Plugin 'git@bitbucket.org:tresorit/vimtresorit.git'
+	Plug 'git@bitbucket.org:tresorit/vimtresorit.git'
 endif
-call vundle#end()
-filetype plugin indent on
+call plug#end()
 
 set history=1000
 set undolevels=1000
