@@ -2,7 +2,6 @@
 let s:hostname = substitute(system('hostname'), '\n', '', '')
 
 call plug#begin('~/.vim/plugged')
-Plug 'VundleVim/Vundle.vim'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
