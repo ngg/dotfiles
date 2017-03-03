@@ -246,8 +246,8 @@ noremap <silent> <F1> :bp<CR>
 inoremap <silent> <F1> <Esc>:bp<CR>
 noremap <silent> <F2> :bn<CR>
 inoremap <silent> <F2> <Esc>:bn<CR>
-noremap <silent> <F4> :A<CR>
-inoremap <silent> <F4> <Esc>:A<CR>
+noremap <silent> <F4> :FSHere<CR>
+inoremap <silent> <F4> <Esc>:FSHere<CR>
 noremap <silent> <leader>u :UndotreeToggle<CR>
 nnoremap <silent> <space> :noh<CR><space>
 nnoremap <silent> <leader>gv :Gitv --date-order<CR>
