@@ -108,7 +108,12 @@ command! W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 let g:unite_prompt='» '
 let g:unite_source_history_yank_enable = 1
 let g:unite_source_grep_max_candidates = 1000
-if executable('ag')
+if executable('rg')
+	let g:unite_source_grep_command = 'rg'
+	let g:unite_source_grep_default_opts = '--hidden --no-heading --vimgrep -S'
+	let g:unite_source_grep_recursive_opt = ''
+	let g:unite_source_rec_async_command = ['rg', '--files', '--follow', '--hidden']
+elseif executable('ag')
 	let g:unite_source_grep_command = 'ag'
 	let g:unite_source_grep_default_opts = '--line-numbers --nocolor --nogroup --hidden'
 	let g:unite_source_grep_recursive_opt = ''
@@ -118,6 +123,7 @@ call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
 nnoremap <silent> <C-p> :Unite -start-insert -no-split -buffer-name=file_rec file_rec/async<cr>
 nnoremap <silent> <C-t> :Unite -start-insert -no-split -buffer-name=outline -auto-preview outline<cr>
+nnoremap <silent> <C-g> :Unite -start-insert -no-split -buffer-name=grep -auto-preview grep<cr><cr>
 nnoremap <silent> <leader>p :Unite -no-split -buffer-name=mru -auto-preview -quick-match file_mru<cr>
 nnoremap <silent> <leader>y :Unite -buffer-name=yank -quick-match history/yank<cr>
 nnoremap <silent> <leader>b :Unite -buffer-name=buffer -quick-match buffer<cr>
@@ -227,7 +233,10 @@ vnoremap : ;
 autocmd VimResized * wincmd =
 
 " Search and Replace
-if executable('ag')
+if executable("rg")
+    set grepprg=rg\ --vimgrep\ --no-heading\ --hidden
+    set grepformat=%f:%l:%c:%m,%f:%l:%m
+elseif executable('ag')
 	set grepprg=ag\ --nogroup\ --nocolor
 endif
 
