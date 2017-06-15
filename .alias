@@ -7,6 +7,7 @@ alias emw="sudo emerge -uDN @world"
 alias es="sudo eix-sync -H"
 alias rm-unite-cache="rm -rf ~/.cache/unite"
 alias cgdb="cgdb -- -x ~/.cgdbinit"
+alias rg="rg --colors=path:fg:green --colors=path:style:bold --colors=line:fg:yellow"
 
 # Override some git aliases
 alias gbl='git branch -vv'
