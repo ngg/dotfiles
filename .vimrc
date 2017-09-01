@@ -191,7 +191,7 @@ map <leader>k <Plug>(easymotion-k)
 "map N <Plug>(easymotion-prev)
 
 " YCM
-let g:ycm_extra_conf_globlist = ['~/git/*', '~/.vim/ycm_extra_conf.py', '!~/*']
+let g:ycm_extra_conf_globlist = ['~/git/*', '~/.vim/ycm_extra_conf.py', '/mnt/data/ngg/*', '!~/*']
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_always_populate_location_list = 1
