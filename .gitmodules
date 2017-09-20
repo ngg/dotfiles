@@ -12,7 +12,7 @@
 	url = https://github.com/powerline/fonts
 [submodule ".local/share/zgen"]
 	path = .local/share/zgen
-	url = https://github.com/tarjoilija/zgen
+	url = https://github.com/ngg/zgen
 [submodule ".local/share/vim-plug"]
 	path = .local/share/vim-plug
 	url = https://github.com/junegunn/vim-plug
