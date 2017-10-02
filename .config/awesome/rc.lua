@@ -4,7 +4,6 @@ local awful = require("awful")
 require("awful.autofocus")
 -- Widget and layout library
 local wibox = require("wibox")
-local timer = require("timer")
 -- Theme handling library
 local beautiful = require("beautiful")
 -- Notification library
@@ -133,15 +132,15 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 mytextclock = wibox.widget.textclock()
 
 -- Create a battery widget
+mybattery = wibox.widget.textbox()
 if hostname == "ngghp" then
-    mybattery = wibox.widget.textbox()
     function mybatteryupdate()
         fh = assert(io.popen("acpi | cut -d, -f 2,3 -", "r"))
         mybattery:set_text(" |" .. fh:read("*l") .. " |")
         fh:close()
     end
     mybatteryupdate()
-    mybatterytimer = timer({ timeout = 5 })
+    mybatterytimer = gears.timer({ timeout = 5 })
     mybatterytimer:connect_signal("timeout", mybatteryupdate)
     mybatterytimer:start()
 end
@@ -236,6 +235,7 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
             wibox.widget.systray(),
+            mybattery,
             mytextclock,
             s.mylayoutbox,
         },
