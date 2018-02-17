@@ -4,7 +4,7 @@ alias xcrun=""
 alias fuck='$(thefuck $(fc -ln -1))'
 alias em="sudo emerge"
 alias emw="sudo emerge -uDN @world"
-alias es="sudo eix-sync -H"
+alias es="sudo eix-sync -H -a"
 alias rm-unite-cache="rm -rf ~/.cache/unite"
 alias cgdb="cgdb -- -x ~/.cgdbinit"
 alias rg="rg --colors=path:fg:green --colors=path:style:bold --colors=line:fg:yellow"
