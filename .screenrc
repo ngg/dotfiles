@@ -1,6 +1,7 @@
 defscrollback 100000
 stty -ixon -ixoff
 caption always '%{= kG}%-Lw%{= kW}%50> %n*%f %t%{= kG}%+Lw%< %{= kG}%-=%D %Y-%m-%d | %c:%s '
-terminfo rxvt-unicode 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+termcapinfo rxvt* 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
 #defbce "on"
-term screen-256color
+#term screen-256color
+term screen

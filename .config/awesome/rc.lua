@@ -14,7 +14,7 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 hostname = io.lines("/proc/sys/kernel/hostname")()
-if string.match(hostname, "bp1-dsklin") ~= nil then
+if string.sub(hostname, 1, 10) == "bp1-dsklin" then
     hostname = "bp1-dsklin"
 end
 
@@ -592,14 +592,15 @@ function run_once(cmd,findme)
     awful.util.spawn_with_shell("pgrep -f -u $USER -x \"" .. findme .. "\" > /dev/null || (" .. cmd .. ")")
 end
 
-run_once("xcompmgr -c")
+run_once("compton --vsync opengl")
 run_once("xscreensaver -no-splash")
 run_once("parcellite")
 run_once("tresorit --hidden")
 
 if hostname == "bp1-dsklin" then
-    run_once("roccat-notifier", "/usr/bin/python2.7 $HOME/.local/bin/roccat-notifier")
-    run_once("tresorit-control-panel", "/usr/bin/python2.7 $HOME/.local/bin/tresorit-control-panel")
+    run_once("roccat-notifier", "/usr/lib/python-exec/python3.6/python3 $HOME/.local/bin/roccat-notifier")
+    run_once("tresorit-control-panel", "/usr/lib/python-exec/python3.6/python3 $HOME/.local/bin/tresorit-control-panel")
+    run_once("rdm")
 end
 
 if hostname == "ngghp" then
