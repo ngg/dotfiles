@@ -60,8 +60,8 @@
 *color5:                  S_magenta
 *color6:                  S_cyan
 *color7:                  S_base2
-*color9:                  S_orange
 *color8:                  S_base03
+*color9:                  S_orange
 *color10:                 S_base01
 *color11:                 S_base00
 *color12:                 S_base0
@@ -98,8 +98,8 @@ URxvt*depth: 32
 !URxvt*underlineColor: yellow
 
 URxvt*letterSpace: -1
-URxvt*font: xft:Source Code Pro for Powerline:style=Regular:pixelsize=13:antialias=true:hinting=true,xft:Symbola
-URxvt*boldFont: xft:Source Code Pro for Powerline:style=SemiBold:pixelsize=13:antialias=true:hinting=true,xft:Symbola
+URxvt*font: xft:Source Code Pro for Powerline:style=Regular:pixelsize=13:antialias=true:hinting=true,xft:Symbola:pixelsize=13:antialias=true:hinting=true
+URxvt*boldFont: xft:Source Code Pro for Powerline:style=SemiBold:pixelsize=13:antialias=true:hinting=true,xft:Symbola:pixelsize=13:antialias=true:hinting=true
 
 !URxvt*font: xft:Terminess Powerline:pixelsize=14
 !URxvt*boldFont: xft:Terminess Powerline:bold:pixelsize=14
