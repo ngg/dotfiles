@@ -12,7 +12,7 @@ Plug 'tomtom/tcomment_vim'
 Plug 'gregsexton/gitv'
 Plug 'Shougo/vimproc.vim', {'do': 'make'}
 Plug 'Shougo/unite.vim'
-Plug 'Shougo/unite-outline'
+Plug 'Shougo/denite.nvim'
 Plug 'Shougo/neomru.vim'
 Plug 'Shougo/neoyank.vim'
 Plug 'dkprice/vim-easygrep'
@@ -38,6 +38,7 @@ Plug 'elzr/vim-json'
 Plug 'Yggdroot/indentLine'
 Plug 'PProvost/vim-ps1'
 Plug 'lyuts/vim-rtags'
+Plug 'nixprime/cpsm', {'do': './install.sh'}
 if (s:hostname =~ "bp1-dsklin")
 	Plug 'git@bitbucket.org:tresorit/vimtresorit.git'
 endif
@@ -106,29 +107,28 @@ let g:leave_my_textwidth_alone = 1
 " Save as root
 command! W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 
-" Unite
-let g:unite_prompt='» '
-let g:unite_source_history_yank_enable = 1
-let g:unite_source_grep_max_candidates = 1000
-if executable('rg')
-	let g:unite_source_grep_command = 'rg'
-	let g:unite_source_grep_default_opts = '--hidden --no-heading --vimgrep -S'
-	let g:unite_source_grep_recursive_opt = ''
-	let g:unite_source_rec_async_command = ['rg', '--files', '--follow', '--hidden']
-elseif executable('ag')
-	let g:unite_source_grep_command = 'ag'
-	let g:unite_source_grep_default_opts = '--line-numbers --nocolor --nogroup --hidden'
-	let g:unite_source_grep_recursive_opt = ''
-	let g:unite_source_rec_async_command = ['ag', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', '']
+" Denite
+if executable('ag')
+	call denite#custom#var('grep', 'command', ['ag'])
+	call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep'])
+	call denite#custom#var('grep', 'recursive_opts', [])
+	call denite#custom#var('grep', 'pattern_opt', [])
+	call denite#custom#var('grep', 'separator', ['--'])
+	call denite#custom#var('grep', 'final_opts', [])
+	call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', ''])
 endif
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-call unite#filters#sorter_default#use(['sorter_rank'])
-nnoremap <silent> <C-p> :Unite -start-insert -no-split -buffer-name=file_rec file_rec/async<cr>
-nnoremap <silent> <C-t> :Unite -start-insert -no-split -buffer-name=outline -auto-preview outline<cr>
-nnoremap <silent> <C-g> :Unite -start-insert -no-split -buffer-name=grep -auto-preview grep<cr><cr>
-nnoremap <silent> <leader>p :Unite -no-split -buffer-name=mru -auto-preview -quick-match file_mru<cr>
-nnoremap <silent> <leader>y :Unite -buffer-name=yank -quick-match history/yank<cr>
-nnoremap <silent> <leader>b :Unite -buffer-name=buffer -quick-match buffer<cr>
+call denite#custom#option('default', 'prompt', '»')
+call denite#custom#option('_', 'highlight_matched_char', 'no')
+call denite#custom#option('_', 'smartcase', 'true')
+call denite#custom#option('_', 'reversed', 'true')
+call denite#custom#option('_', 'auto_resize', 'true')
+call denite#custom#source('_', 'matchers', ['matcher/cpsm'])
+call denite#custom#source('_', 'sorters', ['sorter/sublime'])
+call denite#custom#map('insert', '<Down>', '<denite:move_to_next_line>', 'noremap')
+call denite#custom#map('insert', '<Up>', '<denite:move_to_previous_line>', 'noremap')
+nnoremap <silent> <C-p> :Denite buffer file_rec<cr>
+nnoremap <silent> <C-t> :Denite outline<cr>
+nnoremap <silent> <leader>y :Denite neoyank<cr>
 
 " gitgutter
 let g:gitgutter_map_keys = 0
@@ -163,8 +163,8 @@ nnoremap <silent> <leader>mt :ToggleMakeTests<CR>
 nnoremap <silent> <leader>mi :PrintMakeInformation<CR>
 nnoremap <leader>bc :CreateOutDir<space>
 nnoremap <silent> <leader>be :EditCurrentOutDir<CR>
-nnoremap <silent> <leader>bo :Unite -start-insert -no-split gn_out<CR>
-nnoremap <silent> <leader>bt :Unite -start-insert -no-split gn_target<CR>
+nnoremap <silent> <leader>bo :Denite unite:gn_out<CR>
+nnoremap <silent> <leader>bt :Denite unite:gn_target<CR>
 nnoremap <silent> <leader>bf :exec ":Make -j5 " . g:GetBuildFileParams(@%)<CR>
 nnoremap <silent> <leader>bp :exec ":Make! -j5 " . g:GetBuildProjectParams(@%)<CR>
 nnoremap <silent> <leader>bpk :exec ":Make! -j5 -k0 " . g:GetBuildProjectParams(@%)<CR>
