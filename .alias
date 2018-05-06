@@ -8,6 +8,7 @@ alias es="sudo eix-sync -H -a"
 alias rm-unite-cache="rm -rf ~/.cache/unite"
 alias cgdb="cgdb -- -x ~/.cgdbinit"
 alias rg="rg --colors=path:fg:green --colors=path:style:bold --colors=line:fg:yellow"
+alias npm="PREFIX=$HOME/.npm-modules/ npm"
 
 # Override some git aliases
 alias gbl='git branch -vv'
