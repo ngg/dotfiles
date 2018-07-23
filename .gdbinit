@@ -1,9 +1,10 @@
-source ~/.local/share/pwndbg/gdbinit.py
+#source ~/.local/share/pwndbg/gdbinit.py
 source ~/.local/share/gdb-waitfor.py
 set disassembly-flavor intel
 set disable-randomization on
 set follow-fork-mode parent
 set breakpoint pending on
+set pagination off
 set print elements 0
 set print thread-events off
 set history save on
