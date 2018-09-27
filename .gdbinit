@@ -1,5 +1,6 @@
 #source ~/.local/share/pwndbg/gdbinit.py
 source ~/.local/share/gdb-waitfor.py
+source ~/.local/share/gdb-colors.py
 set disassembly-flavor intel
 set disable-randomization on
 set follow-fork-mode parent
