@@ -55,7 +55,7 @@ end
 beautiful.init( gears.filesystem.get_configuration_dir() .. "themes/awesome-solarized/dark/theme.lua" )
 
 -- This is used later as the default terminal and editor to run.
-terminal = "urxvt"
+terminal = "urxvtc"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -356,7 +356,8 @@ globalkeys = gears.table.join(
     awful.key({ modkey, "Control" }, "Down", function () awful.util.spawn("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop") end),
     awful.key({ modkey, "Control" }, "Left", function () awful.util.spawn("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous") end),
     awful.key({ modkey, "Control" }, "Right", function () awful.util.spawn("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next") end),
-    awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xscreensaver-command -lock") end)
+    awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xscreensaver-command -lock") end),
+    awful.key({ modkey }, "j", function () awful.util.spawn("wl --no-exit") end)
 )
 
 clientkeys = gears.table.join(
@@ -592,6 +593,7 @@ function run_once(cmd,findme)
     awful.util.spawn_with_shell("pgrep -f -u $USER -x \"" .. findme .. "\" > /dev/null || (" .. cmd .. ")")
 end
 
+run_once("urxvtd")
 run_once("compton --vsync opengl")
 run_once("xscreensaver -no-splash")
 run_once("parcellite")

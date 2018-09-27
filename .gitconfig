@@ -1,6 +1,6 @@
 [user]
 	name = Gergely Nagy
-	email = ngg@tresorit.com
+	useConfigOnly = true
 [alias]
 	graph = log --graph --oneline --decorate
 	k = !gitk --date-order
