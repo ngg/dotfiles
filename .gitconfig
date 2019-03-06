@@ -62,3 +62,5 @@
 	local = true
 [http]
 	cookiefile = /home/ngglocal/.gitcookies
+[rerere]
+	enabled = true

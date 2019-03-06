@@ -20,7 +20,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'Valloric/YouCompleteMe', {'do': 'EXTRA_CMAKE_ARGS=-DEXTERNAL_LIBCLANG_PATH=/usr/lib/llvm/6/lib64/libclang.so ./install.py --clang-completer --racer-completer --system-boost', 'for': ['c', 'cpp', 'python', 'objc', 'objcpp', 'rust']}
+Plug 'Valloric/YouCompleteMe', {'do': 'EXTRA_CMAKE_ARGS=-DEXTERNAL_LIBCLANG_PATH=/usr/lib/llvm/7/lib64/libclang.so ./install.py --clang-completer --racer-completer --system-boost', 'for': ['c', 'cpp', 'python', 'objc', 'objcpp', 'rust']}
 Plug 'mbbill/undotree'
 Plug 'derekwyatt/vim-fswitch'
 Plug 'kris89/vim-multiple-cursors'
