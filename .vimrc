@@ -12,7 +12,7 @@ Plug 'tomtom/tcomment_vim'
 Plug 'gregsexton/gitv'
 Plug 'Shougo/vimproc.vim', {'do': 'make'}
 Plug 'Shougo/unite.vim'
-Plug 'Shougo/denite.nvim'
+Plug 'Shougo/denite.nvim', {'do': 'pip3 install --user --upgrade pynvim'}
 Plug 'Shougo/neomru.vim'
 Plug 'Shougo/neoyank.vim'
 Plug 'dkprice/vim-easygrep'
