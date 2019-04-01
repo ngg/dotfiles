@@ -12,7 +12,7 @@ Plug 'tomtom/tcomment_vim'
 Plug 'gregsexton/gitv'
 Plug 'Shougo/vimproc.vim', {'do': 'make'}
 Plug 'Shougo/unite.vim'
-Plug 'Shougo/denite.nvim', {'do': 'pip3 install --user --upgrade pynvim'}
+Plug 'Shougo/denite.nvim', {'do': 'python3 -m pip install --user --upgrade pynvim'}
 Plug 'Shougo/neomru.vim'
 Plug 'Shougo/neoyank.vim'
 Plug 'dkprice/vim-easygrep'
@@ -39,6 +39,8 @@ Plug 'Yggdroot/indentLine'
 Plug 'PProvost/vim-ps1'
 Plug 'lyuts/vim-rtags'
 Plug 'nixprime/cpsm', {'do': './install.sh'}
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
 if (s:hostname =~ "bp1-dsklin")
 	Plug 'git@bitbucket.org:tresorit/vimtresorit.git'
 endif
@@ -88,6 +90,8 @@ set nobackup
 set writebackup
 set noswapfile
 
+set pyxversion=3
+
 scriptencoding utf-8
 set encoding=utf-8
 
@@ -126,7 +130,7 @@ call denite#custom#source('_', 'matchers', ['matcher/cpsm'])
 call denite#custom#source('_', 'sorters', ['sorter/sublime'])
 call denite#custom#map('insert', '<Down>', '<denite:move_to_next_line>', 'noremap')
 call denite#custom#map('insert', '<Up>', '<denite:move_to_previous_line>', 'noremap')
-nnoremap <silent> <C-p> :Denite buffer file_rec<cr>
+nnoremap <silent> <C-p> :Denite buffer file/rec<cr>
 nnoremap <silent> <C-t> :Denite outline<cr>
 nnoremap <silent> <leader>y :Denite neoyank<cr>
 
