@@ -119,7 +119,7 @@ if executable('ag')
 	call denite#custom#var('grep', 'pattern_opt', [])
 	call denite#custom#var('grep', 'separator', ['--'])
 	call denite#custom#var('grep', 'final_opts', [])
-	call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', ''])
+	call denite#custom#var('file/rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', ''])
 endif
 call denite#custom#option('default', 'prompt', '»')
 call denite#custom#option('_', 'highlight_matched_char', 'no')
