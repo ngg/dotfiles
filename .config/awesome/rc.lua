@@ -356,7 +356,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey, "Control" }, "Down", function () awful.util.spawn("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop") end),
     awful.key({ modkey, "Control" }, "Left", function () awful.util.spawn("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous") end),
     awful.key({ modkey, "Control" }, "Right", function () awful.util.spawn("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next") end),
-    awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xscreensaver-command -lock") end),
+    awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xset s activate") end),
     awful.key({ modkey }, "j", function () awful.util.spawn("wl --no-exit") end)
 )
 
@@ -595,7 +595,8 @@ end
 
 run_once("urxvtd")
 run_once("compton --vsync opengl")
-run_once("xscreensaver -no-splash")
+awful.util.spawn_with_shell("xset s 120 30")
+run_once("xss-lock -n /usr/libexec/xsecurelock/dimmer -l -- xsecurelock")
 run_once("parcellite")
 run_once("tresorit --hidden")
 
