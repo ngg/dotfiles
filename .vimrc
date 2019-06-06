@@ -46,6 +46,7 @@ if (s:hostname =~ "bp1-dsklin")
 endif
 call plug#end()
 
+set nomodeline
 set history=1000
 set undolevels=1000
 set so=7
