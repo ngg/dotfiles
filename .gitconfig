@@ -64,3 +64,5 @@
 	cookiefile = /home/ngglocal/.gitcookies
 [rerere]
 	enabled = true
+[color]
+	ui = auto
