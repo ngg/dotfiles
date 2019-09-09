@@ -20,7 +20,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'Valloric/YouCompleteMe', {'do': 'EXTRA_CMAKE_ARGS=-DEXTERNAL_LIBCLANG_PATH=/usr/lib/llvm/8/lib64/libclang.so ./install.py --clang-completer --racer-completer --system-boost', 'for': ['c', 'cpp', 'python', 'objc', 'objcpp', 'rust']}
+Plug 'Valloric/YouCompleteMe', {'do': './install.py --clang-completer --clangd-completer --cs-completer --rust-completer --system-boost --system-libclang --ninja', 'for': ['c', 'cpp', 'cs', 'python', 'objc', 'objcpp', 'rust']}
 Plug 'mbbill/undotree'
 Plug 'derekwyatt/vim-fswitch'
 Plug 'kris89/vim-multiple-cursors'
@@ -218,6 +218,9 @@ let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_key_invoke_completion = '<C-Space>'
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_rust_src_path = '/home/ngglocal/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src'
+let g:ycm_use_clangd = 1
+let g:ycm_clangd_uses_ycmd_caching = 0
+let g:ycm_clangd_binary_path = exepath("clangd")
 nnoremap <silent> <leader>g :YcmCompleter GoTo<CR>
 
 " ListToggle
