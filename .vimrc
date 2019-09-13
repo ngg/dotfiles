@@ -10,11 +10,7 @@ Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-unimpaired'
 Plug 'tomtom/tcomment_vim'
 Plug 'gregsexton/gitv'
-Plug 'Shougo/vimproc.vim', {'do': 'make'}
-Plug 'Shougo/unite.vim'
-Plug 'Shougo/denite.nvim', {'do': 'python3 -m pip install --user --upgrade pynvim'}
 Plug 'Shougo/neomru.vim'
-Plug 'Shougo/neoyank.vim'
 Plug 'dkprice/vim-easygrep'
 Plug 'altercation/vim-colors-solarized'
 Plug 'Lokaltog/vim-easymotion'
@@ -38,9 +34,8 @@ Plug 'elzr/vim-json'
 Plug 'Yggdroot/indentLine'
 Plug 'PProvost/vim-ps1'
 Plug 'lyuts/vim-rtags'
-Plug 'nixprime/cpsm', {'do': './install.sh'}
-Plug 'roxma/nvim-yarp'
-Plug 'roxma/vim-hug-neovim-rpc'
+Plug 'junegunn/fzf', { 'dir': '~/.local/share/fzf', 'do': './install --bin' }
+Plug 'junegunn/fzf.vim'
 if (s:hostname =~ "bp1-dsklin")
 	Plug 'git@bitbucket.org:tresorit/vimtresorit.git'
 endif
@@ -112,46 +107,27 @@ let g:leave_my_textwidth_alone = 1
 " Save as root
 command! W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 
-" Denite
-if executable('ag')
-	call denite#custom#var('grep', 'command', ['ag'])
-	call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep'])
-	call denite#custom#var('grep', 'recursive_opts', [])
-	call denite#custom#var('grep', 'pattern_opt', [])
-	call denite#custom#var('grep', 'separator', ['--'])
-	call denite#custom#var('grep', 'final_opts', [])
-	call denite#custom#var('file/rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', ''])
-endif
-call denite#custom#option('default', 'prompt', '»')
-call denite#custom#option('_', 'highlight_matched_char', 'no')
-call denite#custom#option('_', 'smartcase', 'true')
-call denite#custom#option('_', 'reversed', 'true')
-call denite#custom#option('_', 'auto_resize', 'true')
-call denite#custom#source('_', 'matchers', ['matcher/cpsm'])
-call denite#custom#source('_', 'sorters', ['sorter/sublime'])
-call denite#custom#map('insert', '<Down>', '<denite:move_to_next_line>', 'noremap')
-call denite#custom#map('insert', '<Up>', '<denite:move_to_previous_line>', 'noremap')
-nnoremap <silent> <C-p> :Denite buffer file/rec<cr>
-nnoremap <silent> <C-t> :Denite outline<cr>
-nnoremap <silent> <leader>y :Denite neoyank<cr>
-
-autocmd FileType denite call s:denite_my_settings()
-function! s:denite_my_settings() abort
-  nnoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
-  nnoremap <silent><buffer><expr> p denite#do_map('do_action', 'preview')
-  nnoremap <silent><buffer><expr> q denite#do_map('quit')
-  nnoremap <silent><buffer><expr> i denite#do_map('open_filter_buffer')
-  nnoremap <silent><buffer><expr> <Space> denite#do_map('toggle_select').'j'
-endfunction
+" fzf
+let g:fzf_command_prefix = 'Fzf'
+nnoremap <silent> <leader>;f :FzfFiles<cr>
+nnoremap <silent> <leader>;F :FzfHistory<cr>
+nnoremap <silent> <leader>;g :FzfGFiles<cr>
+nnoremap <silent> <leader>;G :FzfGFiles?<cr>
+nnoremap <silent> <leader>;b :FzfBuffers<cr>
+nnoremap <silent> <leader>;t :FzfBTags<cr>
+nnoremap <silent> <leader>;T :FzfTags<cr>
+nnoremap <silent> <leader>;<leader> :FzfAg<cr>
+nmap <silent> <C-p> <leader>;f
+nmap <silent> <C-t> <leader>;t"
 
 " gitgutter
 let g:gitgutter_map_keys = 0
 let g:gitgutter_max_signs = 5000
-nmap ]h <Plug>GitGutterNextHunk
-nmap [h <Plug>GitGutterPrevHunk
-nmap <leader>hs <Plug>GitGutterStageHunk
-nmap <leader>hr <Plug>GitGutterRevertHunk
-nmap <leader>hp <Plug>GitGutterPreviewHunk
+nmap ]h <Plug>(GitGutterNextHunk)
+nmap [h <Plug>(GitGutterPrevHunk)
+nmap <leader>hs <Plug>(GitGutterStageHunk)
+nmap <leader>hr <Plug>(GitGutterRevertHunk)
+nmap <leader>hp <Plug>(GitGutterPreviewHunk)
 
 " nextval
 nmap <silent> + <Plug>nextvalInc
@@ -176,9 +152,9 @@ nnoremap <silent> <leader>md :ToggleMakeDebug<CR>
 nnoremap <silent> <leader>mt :ToggleMakeTests<CR>
 nnoremap <silent> <leader>mi :PrintMakeInformation<CR>
 nnoremap <leader>bc :CreateOutDir<space>
-nnoremap <silent> <leader>be :EditCurrentOutDir<CR>
-nnoremap <silent> <leader>bo :Denite unite:gn_out<CR>
-nnoremap <silent> <leader>bt :Denite unite:gn_target<CR>
+nnoremap <silent> <leader>be :Gn args<CR>
+nnoremap <silent> <leader>bo :GnOut<CR>
+nnoremap <silent> <leader>bt :GnTarget<CR>
 nnoremap <silent> <leader>bf :exec ":Make -j5 " . g:GetBuildFileParams(@%)<CR>
 nnoremap <silent> <leader>bp :exec ":Make! -j5 " . g:GetBuildProjectParams(@%)<CR>
 nnoremap <silent> <leader>bpk :exec ":Make! -j5 -k0 " . g:GetBuildProjectParams(@%)<CR>

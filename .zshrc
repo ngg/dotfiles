@@ -97,7 +97,8 @@ for key in "${(s: :)key_info[ControlRight]}"
 ##
 source "$HOME/.alias"
 source "$HOME/.env"
-
+source_if_available "$HOME/.local/share/fzf/shell/completion.zsh"
+source_if_available "$HOME/.local/share/fzf/shell/key-bindings.zsh"
 
 ##
 # Get notified when someone logs in
@@ -112,6 +113,4 @@ WATCHFMT="%n from %M has %a tty%l at %T %W"
 ##
 export ZSH_PLUGINS_ALIAS_TIPS_EXCLUDES="_ g"
 
-if [[ -f "$HOME/git/CoreTools/GoogleTestCompletion.sh" ]]; then
-    source "$HOME/git/CoreTools/GoogleTestCompletion.sh"
-fi
+source_if_available "$HOME/git/CoreTools/GoogleTestCompletion.sh"
