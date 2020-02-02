@@ -594,7 +594,7 @@ function run_once(cmd,findme)
 end
 
 run_once("urxvtd")
-run_once("compton --vsync opengl")
+run_once("compton --vsync opengl-swc --backend glx --paint-on-overlay")
 awful.util.spawn_with_shell("xset s 120 30")
 run_once("env XSECURELOCK_SHOW_DATETIME=1 XSECURELOCK_FONT=\"Source Code Pro for Powerline\" xss-lock -n /usr/libexec/xsecurelock/dimmer -l -- xsecurelock", "xss-lock -n /usr/libexec/xsecurelock/dimmer -l -- xsecurelock")
 run_once("parcellite")
