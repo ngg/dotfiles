@@ -22,7 +22,7 @@
 [push]
 	default = simple
 [pull]
-	rebase = preserve
+	rebase = merges
 [branch]
 	autosetuprebase = always
 [credential]
