@@ -1,14 +1,89 @@
 #!/usr/bin/env python3
 import argparse
-import http.server
+import ssl
+import tempfile
+from http.server import SimpleHTTPRequestHandler, HTTPServer
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-p', '--port', type=int, default=8000)
 parser.add_argument('-o', '--host', default='localhost')
+parser.add_argument('-s', '--ssl', action='store_true')
 args = parser.parse_args()
 
-http.server.SimpleHTTPRequestHandler.extensions_map['.wasm'] = 'application/wasm'
-httpd = http.server.HTTPServer((args.host, args.port), http.server.SimpleHTTPRequestHandler)
 
-print(f'Listening on {args.host}:{args.port}')
-httpd.serve_forever()
+class Handler(SimpleHTTPRequestHandler):
+    def end_headers(self):
+        self.send_header('Cache-Control', 'no-cache, must-revalidate')
+        self.send_header('Connection', 'close')
+        self.send_header('Expires', '-1')
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Cross-Origin-Opener-Policy', 'same-origin')
+        self.send_header('Cross-Origin-Embedder-Policy', 'require-corp')
+        self.send_header('Cross-Origin-Resource-Policy', 'cross-origin')
+
+        super().end_headers()
+
+
+SimpleHTTPRequestHandler.extensions_map['.wasm'] = 'application/wasm'
+httpd = HTTPServer((args.host, args.port), Handler)
+
+with tempfile.NamedTemporaryFile() as certfile:
+    certfile.write(b'''
+-----BEGIN PRIVATE KEY-----
+MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDSw4XPcHFj0BZc
+Vv1UHnjzarS+mETrk4Mvm4Fmf1CYHMBaYElR2HbFzl4ci1B1QNeBUZMj6Prilcls
+tEvJ00sJdf0d4HQvjB5FjG57+JQMu7ijf0cRNXog1UCT3ZoVnapxNyuODlTgOO4m
+xtTCB9X05k8PFsDRlhSxp8ij/SKvArT4JpUUo4jANIZwYoUhvpSJJ9XQiwHKoXQD
+i1zEDmf4iDaXxRxWjJ4CHq3ACAHZuCzFpq5gl16xAhwXoRFImH5cOXX0QX5zoA8G
+cSu18Rcy2/lpLpjdI/evTyLBNfXDyfHj4yZ4Y0HcZZvTY+Pgk+i8N5WAQM3xKEXt
+x0hrspAXAgMBAAECggEBAL5UYU9ePJelf7vttqGzTwiK8SQ5P+v5b3ubk7Sq/m4P
+cMlssGmf8EpbPXPLf2ITp0maECVarM3X9GkdPF/LVrT5fxXu7x1NDL1DvzZm2dPR
+5kCHnPb2cw6ZZdLiSNaCZjwNVWDYol9GKhKMde+uwdGB9h0rL/9U5+UzHqaw3xRo
+2nik8CfIruMQmFtH7QJxyOHmCTT9fbAnRUhKzr+/hF4nxoYDyBA9witWxbCyNXk5
+Oizr23lnpOMsiU6bLZ4SK5Ttp1s9LDPxsEmjAePgrhG8HX4cBJBeLJnroR+32bBO
+2EhbxDL69+KdZYgJPxG5qOeABj8d6NLLPdXsp5mFfgkCgYEA8mSRhmXZIXi83vGW
+h+KIfGIzYfCXypOYmzHNCVW3gr1pzqdrJ4sP1VAuacC+mWfeluy9a1bH9zTZpvvT
+wV45dvaZ3kMjjjdpQ/hVjM3WDjgPdjZRv2JBtqrPULC36d39sOomB6ipMVgFKFp8
+dwMcHgaqzjtsDbKrUEigpMtHon0CgYEA3phpgiesciwKjZKdiAouRbXdAfKrCDKW
+ir6mZ8R11wx/SGS3agEwq2XIaf7LSEp5wUi0jrVp3Vgwahc8hp2UkWQI76g0OMmV
+Kb6jJsO5odfpkhcz65bpCELrqTvgvth8XMQ0kGtRFEuM8pGLG8qIIqs71ujVkH26
+RZBGDJXzDSMCgYAej62Fe3vn63gsx9sJ4PcCb8M4uwP4Z6mbD6lhXuxXUJhxlMw+
+3Rqu84AWl1Wws9btwoWTbgqiUYiLtD6bp8ypAiieTGrEOJpOFpZ6vU0a19ijN/AQ
+qEvOwzSGYPGfS/z7fFo1Jv/GF+n2j4oX202FP6Pzgqx6Aaf15GJUxMiQZQKBgBH4
+hhQe9dol2hhB7PvtrnysSRJ+L/aydtrut2qLPuREuwXyM6iYPgCob/y2uFy2vouv
+PfyDgu9+zjHSfG11zWfLhrkqgETRaXx8Spm3lYYOc2n6+5MalOe412PLVMKzoZ6v
+rHq4X0xfKRrwSyXMPR9naaZZF9zZea9iDXW4qW23AoGAamo2WBcXlFcSIm5OAlMv
+AMCS+w+esWfk7l7mTiSOhOx1lyMqe5ClaoVXfyUCn1zp0H3z0fGn1OBUcSauJdAy
+H5UPlX9sZ8CfIwfvtwzk9baIBrgiiHrfFwvmUPTmxnA7ilqPI+HIxMVEnVhkG3/l
+kDhjskPdH7yO9tTYLzj/DpM=
+-----END PRIVATE KEY-----
+-----BEGIN CERTIFICATE-----
+MIIDkzCCAnugAwIBAgIUK979RrweeCMaLbIuY+yOMmfY25IwDQYJKoZIhvcNAQEL
+BQAwWTELMAkGA1UEBhMCQVUxEzARBgNVBAgMClNvbWUtU3RhdGUxITAfBgNVBAoM
+GEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDESMBAGA1UEAwwJbG9jYWxob3N0MB4X
+DTIwMDIwNzE4MDMxOFoXDTMwMDIwNDE4MDMxOFowWTELMAkGA1UEBhMCQVUxEzAR
+BgNVBAgMClNvbWUtU3RhdGUxITAfBgNVBAoMGEludGVybmV0IFdpZGdpdHMgUHR5
+IEx0ZDESMBAGA1UEAwwJbG9jYWxob3N0MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8A
+MIIBCgKCAQEA0sOFz3BxY9AWXFb9VB5482q0vphE65ODL5uBZn9QmBzAWmBJUdh2
+xc5eHItQdUDXgVGTI+j64pXJbLRLydNLCXX9HeB0L4weRYxue/iUDLu4o39HETV6
+INVAk92aFZ2qcTcrjg5U4DjuJsbUwgfV9OZPDxbA0ZYUsafIo/0irwK0+CaVFKOI
+wDSGcGKFIb6UiSfV0IsByqF0A4tcxA5n+Ig2l8UcVoyeAh6twAgB2bgsxaauYJde
+sQIcF6ERSJh+XDl19EF+c6APBnErtfEXMtv5aS6Y3SP3r08iwTX1w8nx4+MmeGNB
+3GWb02Pj4JPovDeVgEDN8ShF7cdIa7KQFwIDAQABo1MwUTAdBgNVHQ4EFgQUJc/M
+lF2I2Nr7w92sJFanDwbJB5gwHwYDVR0jBBgwFoAUJc/MlF2I2Nr7w92sJFanDwbJ
+B5gwDwYDVR0TAQH/BAUwAwEB/zANBgkqhkiG9w0BAQsFAAOCAQEAej9mC1TM1xMT
+c0oOZZAoeQM5vb5pcB1UwsTVI61nnOXSQ14SixBGBwYUBOd1JMJBAlBm2qABR8s6
+WAVr/sdNdNTWgHH3ZLQUoywJVir7iDObFhgug7LPf/RbtJjTq6Gf1vuT1SIchWyW
+ll+GJ7xF7KdCPgJKgo6JpWv1GXkK4N5SmkuVfeuAHztf09OXxetT8EYRmjFfTeKc
+wcEmBgAwglkpeG5f8/MUpSie1YLM5a/L8H/l1xGEpQAW5+C+3ZlxIdb0BDXwrIkv
+jNkl21LuKhdjtNfnhbk8NNm4r8d4/J0y2HhdB0vfNFUF32ocYFFmYfHnYn6Iomom
+VypsgYQY1g==
+-----END CERTIFICATE-----
+''')
+    certfile.flush()
+
+    if args.ssl:
+        httpd.socket = ssl.wrap_socket(httpd.socket, certfile=certfile.name, server_side=True)
+
+    print(f'Listening on {args.host}:{args.port}')
+    httpd.serve_forever()
