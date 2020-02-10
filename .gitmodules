@@ -19,3 +19,7 @@
 [submodule ".local/share/pwndbg"]
 	path = .local/share/pwndbg
 	url = https://github.com/pwndbg/pwndbg
+[submodule ".local/share/gef"]
+	path = .local/share/gef
+	url = https://github.com/hugsy/gef
+	branch = master

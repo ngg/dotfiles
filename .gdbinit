@@ -1,4 +1,5 @@
 #source ~/.local/share/pwndbg/gdbinit.py
+#source ~/.local/share/gef/gef.py
 source ~/.local/share/gdb-waitfor.py
 #source ~/.local/share/gdb-colors.py
 #source ~/git/CoreTools/gdb_pretty_print.py
