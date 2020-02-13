@@ -586,23 +586,26 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
-function run_once(cmd,findme)
+function run_once(cmd, delay, findme)
+    if not delay then
+        delay = 0
+    end
     if not findme then
         findme = cmd
     end
-    awful.util.spawn_with_shell("pgrep -f -u $USER -x \"" .. findme .. "\" > /dev/null || (" .. cmd .. ")")
+    awful.util.spawn_with_shell("sleep " .. delay .. "; pgrep -f -u $USER -x \"" .. findme .. "\" > /dev/null || (" .. cmd .. ")")
 end
 
 run_once("urxvtd")
-run_once("compton --vsync opengl-swc --backend glx --paint-on-overlay")
+run_once("compton", 5)
 awful.util.spawn_with_shell("xset s 120 30")
-run_once("env XSECURELOCK_SHOW_DATETIME=1 XSECURELOCK_FONT=\"Source Code Pro for Powerline\" xss-lock -n /usr/libexec/xsecurelock/dimmer -l -- xsecurelock", "xss-lock -n /usr/libexec/xsecurelock/dimmer -l -- xsecurelock")
+run_once("env XSECURELOCK_SHOW_DATETIME=1 XSECURELOCK_FONT=\"Source Code Pro for Powerline\" xss-lock -n /usr/libexec/xsecurelock/dimmer -l -- xsecurelock", 0, "xss-lock -n /usr/libexec/xsecurelock/dimmer -l -- xsecurelock")
 run_once("parcellite")
 run_once("tresorit --hidden")
 
 if hostname == "bp1-dsklin" then
-    run_once("roccat-notifier", "/usr/lib/python-exec/python3.6/python3 $HOME/.local/bin/roccat-notifier")
-    run_once("tresorit-control-panel", "/usr/lib/python-exec/python3.6/python3 $HOME/.local/bin/tresorit-control-panel")
+    run_once("roccat-notifier", 0, "/usr/lib/python-exec/python3.6/python3 $HOME/.local/bin/roccat-notifier")
+    run_once("tresorit-control-panel", 0, "/usr/lib/python-exec/python3.6/python3 $HOME/.local/bin/tresorit-control-panel")
     run_once("rdm")
 end
 
