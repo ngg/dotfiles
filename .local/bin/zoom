@@ -1,2 +1,0 @@
-#!/bin/sh
-LD_PRELOAD=$(dirname "$0")/alsapatch.so /usr/bin/zoom
