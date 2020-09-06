@@ -36,6 +36,8 @@ Plug 'PProvost/vim-ps1'
 Plug 'lyuts/vim-rtags'
 Plug 'junegunn/fzf', { 'dir': '~/.local/share/fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
+Plug 'tpope/vim-speeddating'
+Plug 'jceb/vim-orgmode'
 if (s:hostname =~ "bp1-dsklin")
 	Plug 'git@bitbucket.org:tresorit/vimtresorit.git'
 endif
@@ -206,6 +208,9 @@ let g:lt_height = 15
 
 " indentLine
 let g:indentLine_color_term = 0
+
+" vim-json
+let g:vim_json_syntax_conceal = 0
 
 " Better regex syntax
 nnoremap / /\v
