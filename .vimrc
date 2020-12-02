@@ -1,3 +1,6 @@
+"set verbosefile=~/.vimverbose
+"set verbose=15
+
 " Hostname for host specific configuration
 let s:hostname = substitute(system('hostname'), '\n', '', '')
 
@@ -14,8 +17,8 @@ Plug 'Shougo/neomru.vim'
 Plug 'dkprice/vim-easygrep'
 Plug 'altercation/vim-colors-solarized'
 Plug 'Lokaltog/vim-easymotion'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
+Plug 'mengelbrecht/lightline-bufferline'
 Plug 'Valloric/YouCompleteMe', {'do': './install.py --clang-completer --clangd-completer --cs-completer --rust-completer --ts-completer --system-boost --system-libclang --ninja', 'for': ['c', 'cpp', 'cs', 'python', 'objc', 'objcpp', 'rust', 'js', 'ts']}
 Plug 'mbbill/undotree'
 Plug 'derekwyatt/vim-fswitch'
@@ -39,7 +42,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-speeddating'
 Plug 'jceb/vim-orgmode'
 if (s:hostname =~ "bp1-dsklin")
-	Plug 'git@bitbucket.org:tresorit/vimtresorit.git'
+    Plug 'git@bitbucket.org:tresorit/vimtresorit.git'
 endif
 call plug#end()
 
@@ -63,7 +66,11 @@ set t_vb=
 set tm=500
 set number
 
-set t_Co=256
+set notermguicolors
+set t_Co=16
+" wtf? something sets t_Co to 256 slightly after start...
+autocmd VimEnter,GUIEnter,WinEnter,BufWinEnter * call timer_start(10, {-> execute('set t_Co=16')}, {'repeat':100})
+set t_ut=
 set mouse=a
 
 set tabstop=4
@@ -100,7 +107,7 @@ autocmd CursorHold,CursorHoldI,WinEnter,BufWinEnter * silent! checktime
 
 " Share X windows clipboard
 if has('unnamedplus')
-	set clipboard=unnamedplus
+    set clipboard=unnamedplus
 endif
 
 " Override gentoo vimrc
@@ -163,14 +170,45 @@ nnoremap <silent> <leader>bpk :exec ":Make! -j5 -k0 " . g:GetBuildProjectParams(
 nnoremap <silent> <leader>ba :exec ":Make! -j5 " . g:GetBuildAllParams(@%)<CR>
 nnoremap <silent> <leader>bak :exec ":Make! -j5 -k0 " . g:GetBuildAllParams(@%)<CR>
 
-" good for airline
+" lightLine
 set laststatus=2
+set showtabline=2
 set noshowmode
-let g:airline_theme='solarized'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_buffers = 1
-let g:airline#extensions#tabline#show_tabs = 0
-let g:airline_powerline_fonts=1
+let g:lightline = {
+      \ 'colorscheme': 'selenized_dark',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'tabline': {
+      \   'left': [ [ 'buffers' ] ],
+      \   'right': [ [ ] ]
+      \ },
+      \ 'component_expand': {
+      \   'buffers': 'lightline#bufferline#buffers'
+      \ },
+      \ 'component_function': {
+      \   'fugitive': 'LightlineFugitive'
+      \ },
+      \ 'component_type': {
+      \   'buffers': 'tabsel'
+      \ }
+      \ }
+
+function! LightlineFugitive() abort
+  if &filetype ==# 'help'
+    return ''
+  endif
+  if has_key(b:, 'lightline_fugitive') && reltimestr(reltime(b:lightline_fugitive_)) =~# '^\s*0\.[0-5]'
+    return b:lightline_fugitive
+  endif
+  try
+    let b:lightline_fugitive = fugitive#head(6)
+    let b:lightline_fugitive_ = reltime()
+    return b:lightline_fugitive
+  catch
+  endtry
+  return ''
+endfunction
 
 " EasyMotion
 let g:EasyMotion_smartcase = 1
@@ -238,7 +276,7 @@ if executable("rg")
     set grepprg=rg\ --vimgrep\ --no-heading\ --hidden
     set grepformat=%f:%l:%c:%m,%f:%l:%m
 elseif executable('ag')
-	set grepprg=ag\ --nogroup\ --nocolor
+    set grepprg=ag\ --nogroup\ --nocolor
 endif
 
 " C++ shortcuts
@@ -248,9 +286,7 @@ syntax enable
 let g:load_doxygen_syntax = 1
 
 set background=dark
-let g:solarized_termcolors = 16
-let g:solarized_termtrans = 1
-colorscheme solarized
+colorscheme selenized
 
 noremap <silent> <F1> :bp<CR>
 inoremap <silent> <F1> <Esc>:bp<CR>
@@ -262,6 +298,7 @@ noremap <silent> <leader>u :UndotreeToggle<CR>
 nnoremap <silent> <space> :noh<CR><space>
 nnoremap <silent> <leader>gv :Gitv --date-order<CR>
 nnoremap <silent> <leader>gV :Gitv! --date-order<CR>
+nnoremap <leader>L :<C-u>execute 'file '.fnameescape(resolve(expand('%:p')))<bar> call FugitiveDetect(fnameescape(expand('%:p:h')))<CR>
 
 " autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
 autocmd FileType c,cpp,objc,objcpp,rust setlocal comments-=:// comments+=f://

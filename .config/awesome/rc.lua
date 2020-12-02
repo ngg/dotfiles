@@ -55,7 +55,7 @@ end
 beautiful.init( gears.filesystem.get_configuration_dir() .. "themes/awesome-solarized/dark/theme.lua" )
 
 -- This is used later as the default terminal and editor to run.
-terminal = "urxvtc"
+terminal = "kitty"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -596,7 +596,6 @@ function run_once(cmd, delay, findme)
     awful.util.spawn_with_shell("sleep " .. delay .. "; pgrep -f -u $USER -x \"" .. findme .. "\" > /dev/null || (" .. cmd .. ")")
 end
 
-run_once("urxvtd")
 run_once("picom", 5)
 awful.util.spawn_with_shell("xset s 120 30")
 run_once("env XSECURELOCK_SHOW_DATETIME=1 XSECURELOCK_FONT=\"Source Code Pro for Powerline\" xss-lock -n /usr/libexec/xsecurelock/dimmer -l -- xsecurelock", 0, "xss-lock -n /usr/libexec/xsecurelock/dimmer -l -- xsecurelock")

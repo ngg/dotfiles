@@ -1,15 +1,6 @@
-[submodule ".local/share/mc/mc-solarized-skin"]
-	path = .local/share/mc/mc-solarized-skin
-	url = https://github.com/iwfmp/mc-solarized-skin
-[submodule ".local/share/dircolors/dircolors-solarized"]
-	path = .local/share/dircolors/dircolors-solarized
-	url = https://github.com/seebi/dircolors-solarized
 [submodule ".config/awesome/themes/awesome-solarized"]
 	path = .config/awesome/themes/awesome-solarized
 	url = https://github.com/ngg/awesome-solarized
-[submodule ".fonts/powerline"]
-	path = .fonts/powerline
-	url = https://github.com/powerline/fonts
 [submodule ".local/share/zgen"]
 	path = .local/share/zgen
 	url = https://github.com/ngg/zgen
@@ -23,3 +14,6 @@
 	path = .local/share/gef
 	url = https://github.com/hugsy/gef
 	branch = master
+[submodule ".local/share/selenized"]
+	path = .local/share/selenized
+	url = https://github.com/jan-warchol/selenized
