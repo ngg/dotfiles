@@ -598,7 +598,7 @@ end
 
 run_once("picom", 5)
 awful.util.spawn_with_shell("xset s 120 30")
-run_once("env XSECURELOCK_SHOW_DATETIME=1 XSECURELOCK_FONT=\"Source Code Pro for Powerline\" xss-lock -n /usr/libexec/xsecurelock/dimmer -l -- xsecurelock", 0, "xss-lock -n /usr/libexec/xsecurelock/dimmer -l -- xsecurelock")
+run_once("env XSECURELOCK_SHOW_DATETIME=1 XSECURELOCK_FONT=\"Source Code Pro\" xss-lock -n /usr/libexec/xsecurelock/dimmer -l -- xsecurelock", 0, "xss-lock -n /usr/libexec/xsecurelock/dimmer -l -- xsecurelock")
 run_once("parcellite")
 run_once("tresorit --hidden")
 
