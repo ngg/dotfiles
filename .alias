@@ -10,6 +10,7 @@ alias cgdb="cgdb -- -x ~/.cgdbinit"
 alias rg="rg --colors=path:fg:green --colors=path:style:bold --colors=line:fg:yellow"
 alias ida32="wine ~/.wine/drive_c/Program\ Files/IDA\ 7.0/ida.exe"
 alias ida64="wine ~/.wine/drive_c/Program\ Files/IDA\ 7.0/ida64.exe"
+alias jenkins="ssh -l ngg@tresorit.com -p 2222 jenkins.tresorit.in"
 
 function pwg() {
     pwgen -1cnysBr"\!/>~=]<}:[#|@*;'\"?{^)+&(\`_$\\-0zyZY" ${1:-20}
