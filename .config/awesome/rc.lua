@@ -10,9 +10,12 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
+-- Battery library
+local battery = require("upower_battery")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
+
 hostname = io.lines("/proc/sys/kernel/hostname")()
 if string.sub(hostname, 1, 10) == "bp1-dsklin" then
     hostname = "bp1-dsklin"
@@ -134,15 +137,7 @@ mytextclock = wibox.widget.textclock()
 -- Create a battery widget
 mybattery = wibox.widget.textbox()
 if hostname == "ngghp" then
-    function mybatteryupdate()
-        fh = assert(io.popen("acpi | cut -d, -f 2,3 -", "r"))
-        mybattery:set_text(" |" .. fh:read("*l") .. " |")
-        fh:close()
-    end
-    mybatteryupdate()
-    mybatterytimer = gears.timer({ timeout = 5 })
-    mybatterytimer:connect_signal("timeout", mybatteryupdate)
-    mybatterytimer:start()
+    mybattery = battery()
 end
 
 -- Create a wibox for each screen and add it
