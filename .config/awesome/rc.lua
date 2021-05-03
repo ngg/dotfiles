@@ -581,6 +581,34 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
+-- Zoom meeting should prevent screensaver
+client.connect_signal("manage", function (c)
+    -- WM_CLASS is "zoom" for both main window and meeting window
+    -- WM_NAME is "Zoom" in the beginning, then it gets updated to "Zoom Meeting"
+    if not (c.class == "zoom" and (c.name == "Zoom" or c.name == "Zoom Meeting")) then
+        return
+    end
+
+    --print('[Zoom] Starting timer for C:' .. c.class .. ', N:' .. c.name)
+    c.heartbeat_timer = gears.timer {
+        timeout   = 60,
+        call_now  = false,
+        autostart = true,
+        callback  = function()
+            --print('[Zoom] Resetting screensaver')
+            awful.spawn("xset s reset")
+        end
+    }
+end)
+client.connect_signal("unmanage", function (c)
+    if c.heartbeat_timer == nil then
+        return
+    end
+    --print('[Zoom] Stopping timer for C:' .. c.class .. ', N:' .. c.name)
+    c.heartbeat_timer:stop()
+    c.heartbeat_timer = nil
+end)
+
 function run_once(cmd, delay, findme)
     if not delay then
         delay = 0
