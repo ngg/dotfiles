@@ -585,7 +585,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 client.connect_signal("manage", function (c)
     -- WM_CLASS is "zoom" for both main window and meeting window
     -- WM_NAME is "Zoom" in the beginning, then it gets updated to "Zoom Meeting"
-    if not (c.class == "zoom" and (c.name == "Zoom" or c.name == "Zoom Meeting")) then
+    if not (c.class == "zoom" and c.name == "Zoom Meeting") then
         return
     end
 
