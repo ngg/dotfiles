@@ -237,6 +237,7 @@ let g:ycm_rust_src_path = '/home/ngglocal/.rustup/toolchains/stable-x86_64-unkno
 let g:ycm_use_clangd = 1
 let g:ycm_clangd_uses_ycmd_caching = 0
 let g:ycm_clangd_binary_path = exepath("clangd")
+let g:ycm_clangd_args = ['--header-insertion=never']
 nnoremap <silent> <leader>g :YcmCompleter GoTo<CR>
 
 " ListToggle
