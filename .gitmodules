@@ -19,4 +19,4 @@
 	url = https://github.com/jan-warchol/selenized
 [submodule ".config/awesome/upower_battery"]
 	path = .config/awesome/upower_battery
-	url = https://github.com/lexa/awesome_upower_battery
+	url = https://github.com/ngg/awesome_upower_battery
