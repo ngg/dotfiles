@@ -3,7 +3,7 @@
 	url = https://github.com/ngg/awesome-solarized
 [submodule ".local/share/zgen"]
 	path = .local/share/zgen
-	url = https://github.com/ngg/zgen
+	url = https://github.com/tarjoilija/zgen
 [submodule ".local/share/vim-plug"]
 	path = .local/share/vim-plug
 	url = https://github.com/junegunn/vim-plug
