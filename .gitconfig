@@ -1,5 +1,6 @@
 [user]
 	name = Gergely Nagy
+	email = ngg@ngg.hu
 	useConfigOnly = true
 [alias]
 	graph = log --graph --oneline --decorate
