@@ -17,9 +17,6 @@ local battery = require("upower_battery")
 require("awful.hotkeys_popup.keys")
 
 hostname = io.lines("/proc/sys/kernel/hostname")()
-if string.sub(hostname, 1, 10) == "bp1-dsklin" then
-    hostname = "bp1-dsklin"
-end
 
 bgname = "bg.png"
 if hostname == "ngghp" then
@@ -623,14 +620,4 @@ run_once("picom", 5)
 awful.util.spawn_with_shell("xset s 120 30")
 run_once("env XSECURELOCK_SHOW_DATETIME=1 XSECURELOCK_FONT=\"Source Code Pro\" xss-lock -n /usr/libexec/xsecurelock/dimmer -l -- xsecurelock", 0, "xss-lock -n /usr/libexec/xsecurelock/dimmer -l -- xsecurelock")
 run_once("parcellite")
-run_once("tresorit --hidden")
-
-if hostname == "bp1-dsklin" then
-    run_once("roccat-notifier", 0, "/usr/lib/python-exec/python3.6/python3 $HOME/.local/bin/roccat-notifier")
-    run_once("tresorit-control-panel", 0, "/usr/lib/python-exec/python3.6/python3 $HOME/.local/bin/tresorit-control-panel")
-    run_once("rdm")
-end
-
-if hostname == "ngghp" then
-    run_once("transmission-qt")
-end
+run_once("1password --silent")

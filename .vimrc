@@ -41,9 +41,6 @@ Plug 'junegunn/fzf', { 'dir': '~/.local/share/fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-speeddating'
 Plug 'jceb/vim-orgmode'
-if (s:hostname =~ "bp1-dsklin")
-    Plug 'git@bitbucket.org:tresorit/vimtresorit.git'
-endif
 call plug#end()
 
 set nomodeline
@@ -151,24 +148,6 @@ nnoremap <leader>/ :Grep<space>
 let g:UltiSnipsExpandTrigger="<c-y>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" VimTresorit
-noremap <silent> <F3> :Autoformat<CR>
-noremap <silent> <leader>ff :Autoformat<CR>
-noremap <silent> <leader>ft :ToggleAutoFormatCode<CR>
-nnoremap <silent> <leader>mc :ToggleMakeCompiler<CR>
-nnoremap <silent> <leader>md :ToggleMakeDebug<CR>
-nnoremap <silent> <leader>mt :ToggleMakeTests<CR>
-nnoremap <silent> <leader>mi :PrintMakeInformation<CR>
-nnoremap <leader>bc :CreateOutDir<space>
-nnoremap <silent> <leader>be :Gn args<CR>
-nnoremap <silent> <leader>bo :GnOut<CR>
-nnoremap <silent> <leader>bt :GnTarget<CR>
-nnoremap <silent> <leader>bf :exec ":Make -j5 " . g:GetBuildFileParams(@%)<CR>
-nnoremap <silent> <leader>bp :exec ":Make! -j5 " . g:GetBuildProjectParams(@%)<CR>
-nnoremap <silent> <leader>bpk :exec ":Make! -j5 -k0 " . g:GetBuildProjectParams(@%)<CR>
-nnoremap <silent> <leader>ba :exec ":Make! -j5 " . g:GetBuildAllParams(@%)<CR>
-nnoremap <silent> <leader>bak :exec ":Make! -j5 -k0 " . g:GetBuildAllParams(@%)<CR>
 
 " lightLine
 set laststatus=2
