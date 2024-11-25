@@ -29,6 +29,9 @@ if ! zgen saved; then
 	# Auto set the tab and window titles
 	zgen prezto terminal auto-title 'yes'
 
+	# Unlimited history
+	zgen prezto history histsize '99999999'
+
 	# Set the Prezto modules to load (the order matters)
 	ZGEN_PREZTO_LOAD_DEFAULT=0
 	zgen prezto
@@ -67,6 +70,7 @@ setopt nonomatch # pass the unevaluated argument like bash
 setopt print_exit_value
 unsetopt rm_star_silent
 unsetopt share_history
+setopt inc_append_history
 setopt glob_dots                # include dotfiles in globbing
 unsetopt list_beep              # no bell on ambiguous completion
 unsetopt hist_beep              # no bell on error in history
