@@ -4,6 +4,7 @@ alias xcrun=""
 alias fuck='$(thefuck $(fc -ln -1))'
 alias em="sudo emerge"
 alias emw="sudo emerge -uDN --keep-going @world"
+alias emc="sudo emerge -c --exclude=gentoo-kernel-bin"
 alias es="sudo eix-sync -H -a"
 alias rm-unite-cache="rm -rf ~/.cache/unite"
 alias cgdb="cgdb -- -x ~/.cgdbinit"

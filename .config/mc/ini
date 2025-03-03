@@ -23,7 +23,7 @@ mouse_move_pages_viewer=true
 mouse_close_dialog=false
 fast_refresh=false
 drop_menus=false
-wrap_mode=true
+wrap_mode=false
 old_esc_mode=true
 old_esc_mode_timeout=100000
 cd_symlinks=true
@@ -91,6 +91,7 @@ editor_wordcompletion_collect_entire_file=false
 safe_overwrite=false
 
 shadows=true
+shell_directory_timeout=900
 
 [Layout]
 message_visible=true
@@ -169,7 +170,7 @@ simple_swap=false
 panel_scroll_center=false
 
 [Panelize]
+Find *.orig after patching=find . -name \\*.orig -print
+Modified git files=git ls-files --modified
 Find SUID and SGID programs=find . \\( \\( -perm -04000 -a -perm /011 \\) -o \\( -perm -02000 -a -perm /01 \\) \\) -print
 Find rejects after patching=find . -name \\*.rej -print
-Modified git files=git ls-files --modified
-Find *.orig after patching=find . -name \\*.orig -print

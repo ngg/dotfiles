@@ -62,6 +62,7 @@ if ! zgen saved; then
 	zgen save
 fi
 
+autoload -Uz zargs
 
 ##
 # Custom options
@@ -116,5 +117,3 @@ WATCHFMT="%n from %M has %a tty%l at %T %W"
 # Misc
 ##
 export ZSH_PLUGINS_ALIAS_TIPS_EXCLUDES="_ g"
-
-source_if_available "$HOME/git/CoreTools/GoogleTestCompletion.sh"
